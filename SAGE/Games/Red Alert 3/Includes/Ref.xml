@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<AssetDefinition xmlns="uri:thundermods.net:SAGE:WrathEdXML:AssetDefinition">
+
+	<Asset
+		id="AssetId">
+		<EntryReference
+			id="AssetId"
+			AssetType="BaseAssetType" />
+	</Asset>
+
+	<Asset
+		id="FXListRef">
+		<EntryReference
+			id="FXList"
+			AssetType="FXList" />
+	</Asset>
+
+	<Asset
+		id="FXParticleSystemRef">
+		<EntryReference
+			id="FXParticleSystemTemplate"
+			AssetType="FXParticleSystemTemplate" />
+	</Asset>
+
+	<Asset
+		id="WeaponTemplateRef">
+		<EntryReference
+			id="WeaponTemplate"
+			AssetType="WeaponTemplate" />
+	</Asset>
+
+	<Asset
+		id="ArmorTemplateRef">
+		<EntryReference
+			id="ArmorTemplate"
+			AssetType="ArmorTemplate" />
+	</Asset>
+
+	<Asset
+		id="ObjectCreationListRef">
+		<EntryReference
+			id="ObjectCreationList"
+			AssetType="ObjectCreationList" />
+	</Asset>
+
+	<Asset
+		id="GameObjectRef">
+		<EntryReference
+			id="GameObject"
+			AssetType="GameObject" />
+	</Asset>
+
+	<Asset
+		id="GameObjectWeakRef">
+		<EntryWeakReference
+			id="GameObject"
+			AssetType="GameObject" />
+	</Asset>
+
+	<Asset
+		id="UpgradeTemplateRef">
+		<EntryReference
+			id="Upgrade"
+			AssetType="UpgradeTemplate" />
+	</Asset>
+
+	<Asset
+		id="UpgradeTemplateWeakRef">
+		<EntryWeakReference
+			id="Upgrade"
+			AssetType="UpgradeTemplate" />
+	</Asset>
+
+	<Asset
+		id="SpecialPowerRef">
+		<EntryReference
+			id="SpecialPowerTemplate"
+			AssetType="SpecialPowerTemplate" />
+	</Asset>
+
+	<Asset
+		id="RenderObjectRef">
+		<EntryReference
+			id="BaseRenderAssetType"
+			AssetType="BaseRenderAssetType" />
+	</Asset>
+
+	<Asset
+		id="TextureRef">
+		<EntryReference
+			id="Texture"
+			AssetType="Texture" />
+	</Asset>
+
+	<Asset
+		id="EngagingContentRef">
+		<EntryReference
+			id="EngagingContent"
+			AssetType="EngagingContent" />
+	</Asset>
+
+	<Asset
+		id="AttributeModifierRef">
+		<EntryReference
+			id="AttributeModifier"
+			AssetType="AttributeModifier" />
+	</Asset>
+
+	<Asset
+		id="ImageRef">
+		<EntryReference
+			id="PackedTextureImage"
+			AssetType="PackedTextureImage" />
+	</Asset>
+
+	<Asset
+		id="LogicCommandRef">
+		<EntryReference
+			id="LogicCommand"
+			AssetType="LogicCommand" />
+	</Asset>
+
+	<Asset
+		id="HotKeySlotRef">
+		<EntryReference
+			id="HotKeySlot"
+			AssetType="HotKeySlot" />
+	</Asset>
+
+	<Asset
+		id="ExperienceLevelTemplateRef">
+		<EntryReference
+			id="ExperienceLevelTemplate"
+			AssetType="ExperienceLevelTemplate" />
+	</Asset>
+
+	<Asset
+		id="PlayerTemplateRef">
+		<EntryReference
+			id="PlayerTemplate"
+			AssetType="PlayerTemplate" />
+	</Asset>
+
+	<Asset
+		id="PlayerTemplateWeakRef">
+		<EntryWeakReference
+			id="PlayerTemplate"
+			AssetType="PlayerTemplate" />
+	</Asset>
+
+	<Asset
+		id="MouseCursorRef">
+		<EntryReference
+			id="MouseCursor"
+			AssetType="MouseCursor" />
+	</Asset>
+
+	<Asset
+		id="ButtonSingleStateDataRef">
+		<EntryReference
+			id="ButtonSingleStateData"
+			AssetType="ButtonSingleStateData" />
+	</Asset>
+
+	<Asset
+		id="AudioEventInfoRef">
+		<EntryReference
+			id="BaseAudioEventInfo"
+			AssetType="BaseAudioEventInfo" />
+	</Asset>
+
+	<Asset
+		id="EvaEventRef">
+		<EntryReference
+			id="EvaEvent"
+			AssetType="EvaEvent" />
+	</Asset>
+
+	<Asset
+		id="EvaEventWeakRef">
+		<EntryWeakReference
+			id="EvaEvent"
+			AssetType="EvaEvent" />
+	</Asset>
+
+	<Asset
+		id="EvaEventWeakRef">
+		<EntryWeakReference
+			id="EvaEvent"
+			AssetType="EvaEvent" />
+	</Asset>
+
+	<Asset
+		id="TerrainParticleMappingRef">
+		<EntryReference
+			id="TerrainParticleMapping"
+			AssetType="TerrainParticleMapping" />
+	</Asset>
+
+	<Asset
+		id="BounceKickTerrainMappingRef">
+		<EntryReference
+			id="BounceKickTerrainMapping"
+			AssetType="BounceKickTerrainMapping" />
+	</Asset>
+
+	<Asset
+		id="PlayerTechRef">
+		<EntryReference
+			id="PlayerTech"
+			AssetType="PlayerTech" />
+	</Asset>
+
+	<Asset
+		id="PlayerTechRankRef">
+		<EntryReference
+			id="PlayerTechRank"
+			AssetType="PlayerTechRank" />
+	</Asset>
+
+	<Asset
+		id="PurchasePlayerTechButtonTemplateRef">
+		<EntryReference
+			id="PurchasePlayerTechButtonTemplate"
+			AssetType="PurchasePlayerTechButtonTemplate" />
+	</Asset>
+
+	<Asset
+		id="RadiusCursorRef">
+		<EntryReference
+			id="RadiusCursor"
+			AssetType="RadiusCursor" />
+	</Asset>
+
+	<Asset
+		id="PathMusicGameDynamicStateRef">
+		<EntryReference
+			id="PathMusicGameDynamicState"
+			AssetType="PathMusicGameDynamicState" />
+	</Asset>
+
+</AssetDefinition>

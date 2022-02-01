@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<AssetDefinition xmlns="uri:thundermods.net:SAGE:WrathEdXML:AssetDefinition">
+
+	<Asset
+		id="PathMusicMapRuntime">
+		<EntryInheritance
+			id="base"
+			AssetType="BaseAssetType" />
+		<Entry
+			id="MapData"
+			AssetType="SageInt"
+			IsAttribute="true"
+			IsRequired="true" />
+		<Entry
+			id="MapDataSize"
+			AssetType="SageInt"
+			IsAttribute="true"
+			IsRequired="true" />
+	</Asset>
+
+	<GameAsset
+		id="PathMusicMap"
+		TypeHash="3122351307">
+		<EntryInheritance
+			id="base"
+			AssetType="BaseAssetType" />
+		<EntryReference
+			id="File"
+			AssetType="FileReference"
+			IsAttribute="true"
+			IsRequired="true" />
+	</GameAsset>
+
+	<EnumAsset
+		id="PathMusicTrackType">
+		<Entry>MAIN</Entry>
+		<Entry>OVERLAY_0</Entry>
+	</EnumAsset>
+
+	<GameAsset
+		id="PathMusicTrack"
+		TypeHash="2668810035">
+		<EntryInheritance
+			id="base"
+			AssetType="BaseAssetType" />
+		<Entry
+			id="File"
+			AssetType="SageInt"
+			IsAttribute="true" /> <!--
+		<Entry
+			id="Type"
+			AssetType="PathMusicTrackType"
+			IsAttribute="true"
+			IsRequired="true" /> -->
+		<Entry
+			id="PathfinderTrackHeader"
+			AssetType="SageInt"
+			IsAttribute="true" />
+		<Entry
+			id="Handle"
+			AssetType="SageInt"
+			IsAttribute="true" />
+	</GameAsset>
+
+	<GameAsset
+		id="PathMusicEvent"
+		TypeHash="1993395951">
+		<EntryInheritance
+			id="base"
+			AssetType="BaseInheritableAsset" />
+		<EntryReference
+			id="PathfinderEventHeader"
+			AssetType="FileReference"
+			IsAttribute="true"
+			IsRequired="true" />
+		<EntryRelocation
+			id="XferAlternateEvent"
+			AssetType="PathMusicEventWeakRef"
+			IsAttribute="true" />
+		<Entry
+			id="IsXferable"
+			AssetType="SageBool"
+			IsAttribute="true"
+			Default="true" />
+		<Entry
+			id="fill"
+			AssetType="Byte"
+			IsVoid="true" />
+	</GameAsset>
+
+	<Asset
+		id="PathMusicEventRuntime">
+		<EntryInheritance
+			id="base"
+			AssetType="BaseAssetType" />
+		<Entry
+			id="EventNameHash"
+			AssetType="SageInt"
+			IsAttribute="true"
+			IsRequired="true" />
+		<EntryRelocation
+			id="XferAlternateEvent"
+			AssetType="PathMusicEventWeakRef"
+			IsAttribute="true" />
+		<Entry
+			id="IsXferable"
+			AssetType="SageBool"
+			IsAttribute="true"
+			Default="true" />
+		<Entry
+			id="fill"
+			AssetType="Byte"
+			IsVoid="true" />
+	</Asset>
+
+	<Asset
+		id="PathMusicEventRef">
+		<EntryReference
+			id="PathMusicEvent"
+			AssetType="PathMusicEvent" />
+	</Asset>
+
+	<Asset
+		id="PathMusicEventWeakRef">
+		<EntryWeakReference
+			id="PathMusicEvent"
+			AssetType="PathMusicEvent" />
+	</Asset>
+
+	<EnumAsset
+		id="PathMusicEventSetCategory">
+		<Entry>SHELL</Entry>
+		<Entry>SCRIPT</Entry>
+	</EnumAsset>
+
+	<GameAsset
+		id="PathMusicEventSet"
+		TypeHash="1644774436">
+		<EntryInheritance
+			id="base"
+			AssetType="BaseAssetType" />
+		<Entry
+			id="Category"
+			AssetType="PathMusicEventSetCategory"
+			IsAttribute="true"
+			IsRequired="true" />
+		<EntryList
+			id="Event"
+			AssetType="PathMusicEventRef"
+			MinLength="0"
+			MaxLength="0" />
+	</GameAsset>
+
+	<GameAsset
+		id="PathMusicGameDynamicState"
+		TypeHash="3806481831">
+		<EntryInheritance
+			id="base"
+			AssetType="BaseInheritableAsset" />
+		<EntryRelocation
+			id="EnterEvent"
+			AssetType="PathMusicEventRef"
+			IsAttribute="true" />
+		<EntryRelocation
+			id="ExitEvent"
+			AssetType="PathMusicEventRef"
+			IsAttribute="true" />
+		<EntryList
+			id="Transition"
+			AssetType="PathMusicGameDynamicTransitionRef"
+			MinLength="0"
+			MaxLength="0" />
+	</GameAsset>
+
+	<EnumAsset
+		id="PathMusicGameDynamicStateSetCategory">
+		<Entry>STANDARD</Entry>
+		<Entry>SCRIPTED</Entry>
+	</EnumAsset>
+
+	<GameAsset
+		id="PathMusicGameDynamicStateSet"
+		TypeHash="1360895287">
+		<EntryInheritance
+			id="base"
+			AssetType="BaseAssetType" />
+		<Entry
+			id="Category"
+			AssetType="PathMusicGameDynamicStateSetCategory"
+			IsAttribute="true"
+			IsRequired="true" />
+		<EntryList
+			id="State"
+			AssetType="PathMusicGameDynamicStateRef"
+			MinLength="0"
+			MaxLength="0" />
+	</GameAsset>
+
+	<GameAsset
+		id="PathMusicGameDynamicTransition"
+		TypeHash="2196796046">
+		<EntryInheritance
+			id="base"
+			AssetType="BaseAssetType" />
+		<EntryWeakReference
+			id="DestinationState"
+			AssetType="PathMusicGameDynamicState"
+			IsAttribute="true"
+			IsRequired="true" />
+		<EntryReference
+			id="Condition"
+			AssetType="MusicScriptCondition" />
+	</GameAsset>
+
+	<Asset
+		id="PathMusicGameDynamicTransitionRef">
+		<EntryReference
+			id="PathMusicGameDynamicTransition"
+			AssetType="PathMusicGameDynamicTransition" />
+	</Asset>
+
+</AssetDefinition>

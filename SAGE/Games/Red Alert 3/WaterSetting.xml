@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<AssetDefinition xmlns="uri:thundermods.net:SAGE:WrathEdXML:AssetDefinition">
+
+	<GameAsset
+		id="WaterSetting"
+		TypeHash="469423908">
+		<EntryInheritance
+			id="base"
+			AssetType="BaseAssetType" />
+		<Entry
+			id="TimeOfDay"
+			AssetType="TimeOfDayType"
+			IsAttribute="true"
+			IsRequired="true" />
+		<Entry
+			id="DiffuseColor"
+			AssetType="Color4" />
+	</GameAsset>
+
+</AssetDefinition>

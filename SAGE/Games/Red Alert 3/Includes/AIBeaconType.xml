@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<AssetDefinition xmlns="uri:thundermods.net:SAGE:WrathEdXML:AssetDefinition">
+
+	<EnumAsset
+		id="AIBeaconType"
+		IsStartingNegative="true">
+		<Entry>Invalid</Entry>
+		<Entry>Assault</Entry>
+		<Entry>HoldPosition</Entry>
+		<Entry>HoldObject</Entry>
+	</EnumAsset>
+
+</AssetDefinition>

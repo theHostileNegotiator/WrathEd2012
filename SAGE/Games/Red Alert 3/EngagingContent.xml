@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<AssetDefinition xmlns="uri:thundermods.net:SAGE:WrathEdXML:AssetDefinition">
+
+	<GameAsset
+		id="EngagingContent"
+		TypeHash="725292512">
+		<EntryInheritance
+			id="base"
+			AssetType="BaseAssetType" />
+		<Entry
+			id="TitleId"
+			AssetType="String"
+			IsAttribute="true"
+			IsRequired="true" />
+		<Entry
+			id="DescId"
+			AssetType="String"
+			IsAttribute="true"
+			IsRequired="true" />
+		<Entry
+			id="ImageId"
+			AssetType="String"
+			IsAttribute="true"
+			IsRequired="true" />
+	</GameAsset>
+
+	<Asset
+		id="PlayerTechRef">
+		<EntryReference
+			id="PlayerTech"
+			AssetType="PlayerTech" />
+	</Asset>
+
+	<GameAsset
+		id="EngagingContentGroup"
+		TypeHash="1507896455">
+		<EntryInheritance
+			id="base"
+			AssetType="BaseAssetType" />
+		<EntryList
+			id="EngagingContent"
+			AssetType="EngagingContentRef"
+			MinLength="1"
+			MaxLength="0" />
+	</GameAsset>
+
+	<GameAsset
+		id="EngagingContentSequence"
+		TypeHash="226620221">
+		<EntryInheritance
+			id="base"
+			AssetType="BaseAssetType" />
+		<Entry
+			id="MapName"
+			AssetType="String"
+			IsAttribute="true"
+			IsRequired="true" />
+		<EntryReference
+			id="RequiredContent"
+			AssetType="EngagingContentGroup"
+			IsAttribute="true" />
+		<EntryReference
+			id="RandomContent"
+			AssetType="EngagingContentGroup"
+			IsAttribute="true" />
+	</GameAsset>
+
+</AssetDefinition>

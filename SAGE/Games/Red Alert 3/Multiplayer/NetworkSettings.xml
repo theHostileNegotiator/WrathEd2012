@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<AssetDefinition xmlns="uri:thundermods.net:SAGE:WrathEdXML:AssetDefinition">
+
+	<GameAsset
+		id="NetworkSettings"
+		TypeHash="2097642646">
+		<EntryInheritance
+			id="base"
+			AssetType="BaseSingletonSettings" />
+		<Entry
+			id="RunAheadSlack"
+			AssetType="SageInt"
+			IsAttribute="true"
+			Default="30" />
+	</GameAsset>
+
+</AssetDefinition>

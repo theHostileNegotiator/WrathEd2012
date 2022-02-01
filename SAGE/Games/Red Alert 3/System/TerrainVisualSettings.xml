@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<AssetDefinition xmlns="uri:thundermods.net:SAGE:WrathEdXML:AssetDefinition">
+
+	<GameAsset
+		id="TerrainVisualSettings"
+		TypeHash="1336753171">
+		<EntryInheritance
+			id="base"
+			AssetType="BaseSubsystemSettings" />
+		<Entry
+			id="WaterPosition"
+			AssetType="Vector3" />
+		<Entry
+			id="WaterExtents"
+			AssetType="Vector2" />
+	</GameAsset>
+
+</AssetDefinition>

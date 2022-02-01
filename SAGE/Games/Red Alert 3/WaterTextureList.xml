@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<AssetDefinition xmlns="uri:thundermods.net:SAGE:WrathEdXML:AssetDefinition">
+
+	<GameAsset
+		id="WaterTextureList"
+		TypeHash="1905565848">
+		<EntryInheritance
+			id="base"
+			AssetType="BaseAssetType" />
+		<Entry
+			id="Type"
+			AssetType="WaterTextureType"
+			IsAttribute="true"
+			IsRequired="true" />
+		<EntryList
+			id="Texture"
+			AssetType="String"
+			MinLength="1"
+			MaxLength="0" />
+	</GameAsset>
+
+</AssetDefinition>
