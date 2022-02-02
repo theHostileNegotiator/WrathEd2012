@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<AssetDefinition xmlns="uri:thundermods.net:SAGE:WrathEdXML:AssetDefinition">
+
+	<Asset
+		id="LureObjectsUpdateModuleData">
+		<EntryInheritance
+			id="base"
+			AssetType="UpdateModuleData" />
+		<Entry
+			id="LureObjectLinkID"
+			AssetType="SageInt"
+			IsAttribute="true"
+			Default="0" />
+		<Entry
+			id="GuardRadiusMaxSqr"
+			AssetType="SageReal"
+			IsAttribute="true"
+			Default="1000000" />
+		<Entry
+			id="GuardAttackRange"
+			AssetType="SageReal"
+			IsAttribute="true"
+			Default="99999" />
+		<Entry
+			id="GuardStatus"
+			AssetType="ObjectStatusBitFlags"
+			IsAttribute="true"
+			Default="" />
+		<Entry
+			id="UpdateRate"
+			AssetType="SageInt"
+			IsAttribute="true"
+			Default="10" />
+		<EntryWeakReference
+			id="GuardMarkerObjectRef"
+			AssetType="GameObject"
+			IsAttribute="true" />
+		<Entry
+			id="DisabledTypesToProcess"
+			AssetType="DisabledBitFlags"
+			IsAttribute="true"
+			Default="" />
+		<EntryList
+			id="GuardOffset"
+			AssetType="Vector3"
+			MinLength="1"
+			MaxLength="0" />
+	</Asset>
+
+</AssetDefinition>

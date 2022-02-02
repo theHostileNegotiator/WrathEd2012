@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<AssetDefinition xmlns="uri:thundermods.net:SAGE:WrathEdXML:AssetDefinition">
+
+	<GameAsset
+		id="AptAptData"
+		TypeHash="3795385027"
+		HasSpecialCompileHandling="true">
+		<EntryInheritance
+			id="base"
+			AssetType="BaseAssetType" />
+		<EntryFile
+			id="File"
+			AssetType="DataBlob"
+			IsAttribute="true"
+			IsRequired="true" />
+	</GameAsset>
+
+	<GameAsset
+		id="AptConstData"
+		TypeHash="3876251416"
+		HasSpecialCompileHandling="true">
+		<EntryInheritance
+			id="base"
+			AssetType="BaseAssetType" />
+		<EntryFile
+			id="File"
+			AssetType="DataBlob"
+			IsAttribute="true"
+			IsRequired="true" />
+	</GameAsset>
+
+	<GameAsset
+		id="AptDatData"
+		TypeHash="230038576"
+		HasSpecialCompileHandling="true">
+		<EntryInheritance
+			id="base"
+			AssetType="BaseAssetType" />
+		<EntryFile
+			id="File"
+			AssetType="DataBlob"
+			IsAttribute="true"
+			IsRequired="true" />
+	</GameAsset>
+
+	<GameAsset
+		id="AptGeometryData"
+		TypeHash="1390234602"
+		HasSpecialCompileHandling="true">
+		<EntryInheritance
+			id="base"
+			AssetType="BaseAssetType" />
+		<EntryFile
+			id="File"
+			AssetType="DataBlob"
+			IsAttribute="true"
+			IsRequired="true" />
+		<Entry
+			id="AptID"
+			AssetType="SageInt"
+			IsAttribute="true"
+			IsRequired="true" />
+	</GameAsset>
+
+</AssetDefinition>

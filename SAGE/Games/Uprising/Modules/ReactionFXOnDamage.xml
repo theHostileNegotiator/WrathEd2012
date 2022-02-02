@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<AssetDefinition xmlns="uri:thundermods.net:SAGE:WrathEdXML:AssetDefinition">
+
+	<Asset
+		id="ReactionFXOnDamageModuleData">
+		<EntryInheritance
+			id="base"
+			AssetType="DamageModuleData" />
+		<EntryList
+			id="DamageReactionFXTrigger"
+			AssetType="ReactionFXTriggerData"
+			MinLength="0"
+			MaxLength="0" />
+		<EntryList
+			id="HealingReactionFXTrigger"
+			AssetType="ReactionFXTriggerData"
+			MinLength="0"
+			MaxLength="0" />
+	</Asset>
+
+	<Asset
+		id="ReactionFXTriggerData">
+		<EntryRelocation
+			id="PercentDamagedThreshold"
+			AssetType="SageReal"
+			IsAttribute="true" />
+		<EntryRelocation
+			id="TimeBetweenTriggers"
+			AssetType="Time"
+			IsAttribute="true" />
+		<EntryRelocation
+			id="SourceFilter"
+			AssetType="ObjectFilterAssetRef"
+			IsAttribute="true" />
+		<EntryRelocation
+			id="NameOfVoiceToPlay"
+			AssetType="StringHash"
+			IsAttribute="true" />
+		<EntryRelocation
+			id="SoundToPlay"
+			AssetType="AudioEventInfoRef"
+			IsAttribute="true" />
+		<Entry
+			id="ResetTimerWhenTimerBlocks"
+			AssetType="SageBool"
+			IsAttribute="true"
+			Default="false" />
+		<Entry
+			id="fill"
+			AssetType="Byte"
+			IsVoid="true" />
+	</Asset>
+
+</AssetDefinition>

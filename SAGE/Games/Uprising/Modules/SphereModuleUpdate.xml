@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<AssetDefinition xmlns="uri:thundermods.net:SAGE:WrathEdXML:AssetDefinition">
+
+	<Asset
+		id="SpecialDisguiseTerrainData">
+		<Entry
+			id="TerrainClass"
+			AssetType="TerrainClassType"
+			IsAttribute="true" />
+		<EntryWeakReference
+			id="ObjectTemplate"
+			AssetType="GameObject"
+			IsAttribute="true" />
+	</Asset>
+
+	<Asset
+		id="SphereModuleUpdateModuleData">
+		<EntryInheritance
+			id="base"
+			AssetType="UpdateModuleData" />
+		<Entry
+			id="RadiusMax"
+			AssetType="SageReal"
+			IsAttribute="true"
+			Default="40" />
+		<Entry
+			id="RadiusMin"
+			AssetType="SageReal"
+			IsAttribute="true"
+			Default="10" />
+		<Entry
+			id="DamageTypesNotToAbsorb"
+			AssetType="DamageBitFlags"
+			IsAttribute="true" />
+		<Entry
+			id="ScanFrequency"
+			AssetType="Time"
+			IsAttribute="true"
+			Default="1s" />
+		<Entry
+			id="Duration"
+			AssetType="Time"
+			IsAttribute="true"
+			Default="1s" />
+		<Entry
+			id="SphereBoneName"
+			AssetType="String"
+			IsAttribute="true" />
+		<Entry
+			id="SphereSizeMultiplier"
+			AssetType="SageReal"
+			IsAttribute="true"
+			Default="1.0" />
+		<EntryRelocation
+			id="PositionOffset"
+			AssetType="Vector3" />
+		<Entry
+			id="ObjectFilter"
+			AssetType="ObjectFilter" />
+		<EntryRelocation
+			id="IgnoreInsideToInsideCheck"
+			AssetType="ObjectFilter" />
+		<Entry
+			id="InitiallyActive"
+			AssetType="SageBool"
+			IsAttribute="true"
+			Default="false" />
+		<Entry
+			id="DrawDebugCircle"
+			AssetType="SageBool"
+			IsAttribute="true"
+			Default="true" />
+		<Entry
+			id="fill"
+			AssetType="Byte"
+			IsVoid="true" />
+	</Asset>
+
+</AssetDefinition>

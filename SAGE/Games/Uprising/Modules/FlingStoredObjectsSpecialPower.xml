@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<AssetDefinition xmlns="uri:thundermods.net:SAGE:WrathEdXML:AssetDefinition">
+
+	<Asset
+		id="FlingStoredObjectsObjectMap">
+		<Entry
+			id="Source"
+			AssetType="GameObjectWeakRef"
+			IsAttribute="true"/>
+		<Entry
+			id="Targer"
+			AssetType="GameObjectWeakRef"
+			IsAttribute="true"/>
+	</Asset>
+
+	<Asset
+		id="FlingStoredObjectsSpecialPowerModuleData">
+		<EntryInheritance
+			id="base"
+			AssetType="SpecialPowerModuleData" />
+		<Entry
+			id="StoreObjectsLinkID"
+			AssetType="SageInt"
+			IsAttribute="true"
+			Default="0" />
+		<Entry
+			id="LiftObjectLinkID"
+			AssetType="SageInt"
+			IsAttribute="true"
+			Default="0" />
+		<Entry
+			id="MaximumVelocity"
+			AssetType="SageReal"
+			IsAttribute="true"
+			Default="300.0" />
+		<Entry
+			id="MinimumVelocity"
+			AssetType="SageReal"
+			IsAttribute="true"
+			Default="100.0" />
+		<Entry
+			id="ObjectMap"
+			AssetType="FlingStoredObjectsObjectMap"
+			MinLength="0"
+			MaxLength="0" />
+	</Asset>
+
+</AssetDefinition>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<AssetDefinition xmlns="uri:thundermods.net:SAGE:WrathEdXML:AssetDefinition">
+
+	<EnumAsset
+		id="SweepingLaserOptionsType">
+		<Entry>SWEEP_HORIZONTAL</Entry>
+		<Entry>SWEEP_VERTICAL</Entry>
+		<Entry>MOVE_BACK_AND_FORTH</Entry>
+		<Entry>SWEEP_FROM_SOURCE_ON_ANGLE</Entry>
+	</EnumAsset>
+
+	<FlagsAsset
+		id="SweepingLaserOptionsBitFlags"
+		BaseEnum="SweepingLaserOptionsType" />
+
+	<Asset
+		id="SweepingLaserStateModuleData">
+		<EntryInheritance
+			id="base"
+			AssetType="LaserStateModuleData" />
+		<Entry
+			id="Radius"
+			AssetType="SageReal"
+			IsAttribute="true"
+			Default="10.0" />
+		<Entry
+			id="Angle"
+			AssetType="Angle"
+			IsAttribute="true"
+			Default="0d" />
+		<EntryReference
+			id="SweepFXList"
+			AssetType="FXList"
+			IsAttribute="true" />
+		<EntryReference
+			id="VeteranSweepFXList"
+			AssetType="FXList"
+			IsAttribute="true" />
+		<Entry
+			id="SweepFXTimeout"
+			AssetType="Time"
+			IsAttribute="true"
+			Default="0s" />
+		<EntryReference
+			id="SweepWeapon"
+			AssetType="WeaponTemplate"
+			IsAttribute="true" />
+		<Entry
+			id="SweepingLaserOptions"
+			AssetType="SweepingLaserOptionsBitFlags"
+			IsAttribute="true"
+			Default="SWEEP_HORIZONTAL MOVE_BACK_AND_FORTH" />
+	</Asset>
+
+</AssetDefinition>

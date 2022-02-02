@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<AssetDefinition xmlns="uri:thundermods.net:SAGE:WrathEdXML:AssetDefinition">
+
+	<EnumAsset
+		id="DynamicsJointSwingType">
+		<Entry>SWING_LOCKED</Entry>
+		<Entry>SWING_CONE</Entry>
+		<Entry>SWING_HINGE</Entry>
+		<Entry>SWING_AXLE</Entry>
+		<Entry>SWING_FREE</Entry>
+	</EnumAsset>
+
+	<EnumAsset
+		id="DynamicsJointTwistType">
+		<Entry>TWIST_LOCKED</Entry>
+		<Entry>TWIST_ARC</Entry>
+		<Entry>TWIST_FREE</Entry>
+	</EnumAsset>
+
+	<Asset
+		id="DynamicsBoneVolumeType">
+		<EntryInheritance
+			id="base"
+			AssetType="DynamicsVolumeType" />
+		<Entry
+			id="BoneName"
+			AssetType="String"
+			IsAttribute="true" />
+	</Asset>
+
+	<Asset
+		id="DynamicsBoneVolumeSetType">
+		<EntryList
+			id="BoneVolume"
+			AssetType="DynamicsBoneVolumeType"
+			MinLength="0"
+			MaxLength="0" />
+	</Asset>
+
+	<Asset
+		id="DynamicsJointLinkType">
+		<Entry
+			id="BoneName"
+			AssetType="String"
+			IsAttribute="true" />
+		<EntryRelocation
+			id="Position"
+			AssetType="Vector3" />
+	</Asset>
+
+	<Asset
+		id="DynamicsJointFrameType">
+		<Entry
+			id="Child"
+			AssetType="DynamicsJointLinkType" />
+		<Entry
+			id="Parent"
+			AssetType="DynamicsJointLinkType" />
+	</Asset>
+
+	<Asset
+		id="DynamicsJointLimitsType">
+		<Entry
+			id="SwingType"
+			AssetType="DynamicsJointSwingType"
+			IsAttribute="true"
+			Default="SWING_LOCKED" />
+		<Entry
+			id="SwingDisplacementLimit"
+			AssetType="SageReal"
+			IsAttribute="true"
+			Default="0" />
+		<Entry
+			id="SwingAngleLimit"
+			AssetType="SageReal"
+			IsAttribute="true"
+			Default="0" />
+		<Entry
+			id="TwistType"
+			AssetType="DynamicsJointSwingType"
+			IsAttribute="true"
+			Default="TWIST_LOCKED" />
+		<Entry
+			id="TwistDisplacementLimit"
+			AssetType="SageReal"
+			IsAttribute="true"
+			Default="0" />
+		<Entry
+			id="TwistAngleLimit"
+			AssetType="SageReal"
+			IsAttribute="true"
+			Default="0" />
+		<Entry
+			id="InertiaOverride"
+			AssetType="SageReal"
+			IsAttribute="true"
+			Default="0.2" />
+		<EntryRelocation
+			id="Position"
+			AssetType="Vector3" />
+	</Asset>
+
+	<Asset
+		id="DynamicsJointFrameType">
+		<Entry
+			id="Frame"
+			AssetType="DynamicsJointFrameType" />
+		<Entry
+			id="Limits"
+			AssetType="DynamicsJointLimitsType" />
+	</Asset>
+
+	<Asset
+		id="DynamicsJointSetType">
+		<EntryList
+			id="Joint"
+			AssetType="DynamicsJointType"
+			MinLength="0"
+			MaxLength="0" />
+	</Asset>
+
+	<Asset
+		id="W3DDynamicsDrawModuleData">
+		<EntryInheritance
+			id="base"
+			AssetType="W3DScriptedModelDrawModuleData" />
+		<Entry
+			id="Collision"
+			AssetType="DynamicsCollisionType"
+			IsAttribute="true" />
+		<Entry
+			id="IntuitiveCollision"
+			AssetType="IntuitiveCollisionType"
+			IsAttribute="true"
+			Default="COLLIDES_WITH_GROUND_ONLY" />
+		<Entry
+			id="DrawPriority"
+			AssetType="DynamicsDrawPriority"
+			IsAttribute="true"
+			Default="MUST_BE_DRAWN" />
+		<Entry
+			id="LODPriority"
+			AssetType="EffectsLODType"
+			IsAttribute="true"
+			Default="VERY_LOW" />
+		<Entry
+			id="Explodiness"
+			AssetType="SageReal"
+			IsAttribute="true"
+			Default="0" />
+		<Entry
+			id="FlingPerturbation"
+			AssetType="SageReal"
+			IsAttribute="true"
+			Default="0" />
+		<EntryRelocation
+			id="BoneVolumes"
+			AssetType="DynamicsBoneVolumeSetType" />
+		<EntryRelocation
+			id="Joints"
+			AssetType="DynamicsJointSetType" />
+		<EntryRelocation
+			id="Lifetime"
+			AssetType="DynamicsLifetime" />
+		<Entry
+			id="InitiallyActive"
+			AssetType="SageBool"
+			IsAttribute="true"
+			Default="true" />
+		<Entry
+			id="fill"
+			AssetType="Byte"
+			IsVoid="true" />
+	</Asset>
+
+</AssetDefinition>

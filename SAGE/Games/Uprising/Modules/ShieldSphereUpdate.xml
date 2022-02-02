@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<AssetDefinition xmlns="uri:thundermods.net:SAGE:WrathEdXML:AssetDefinition">
+
+	<EnumAsset
+		id="ShieldSphereUpdateOption">
+		<Entry>ALLOW_ALLIES_PROJECTTILE_GOTHROUGH</Entry>
+	</EnumAsset>
+
+	<FlagsAsset
+		id="ShieldSphereUpdateOptionFlag"
+		BaseEnum="ShieldSphereUpdateOption" />
+
+	<Asset
+		id="ShieldSphereUpdateModuleData">
+		<EntryInheritance
+			id="base"
+			AssetType="SphereModuleUpdateModuleData" />
+		<Entry
+			id="MaxDamage"
+			AssetType="SageReal"
+			IsAttribute="true"
+			Default="0" />
+		<Entry
+			id="ObjectStatus"
+			AssetType="ObjectStatusBitFlags"
+			IsAttribute="true"
+			Default="" />
+		<Entry
+			id="ModelCondition"
+			AssetType="ModelConditionBitFlags"
+			IsAttribute="true"
+			Default="" />
+		<EntryReference
+			id="AttributeModifierName"
+			AssetType="AttributeModifier"
+			IsAttribute="true" />
+		<EntryReference
+			id="ShieldedObjectStatus"
+			AssetType="ObjectStatusBitFlags"
+			IsAttribute="true"
+			Default="" />
+		<Entry
+			id="Options"
+			AssetType="ShieldSphereUpdateOptionFlag"
+			IsAttribute="true" />
+	</Asset>
+
+</AssetDefinition>

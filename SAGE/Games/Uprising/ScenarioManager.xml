@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<AssetDefinition xmlns="uri:thundermods.net:SAGE:WrathEdXML:AssetDefinition">
+
+	<Asset
+		id="ScenarioEnemy">
+		<EntryReference
+			id="Faction"
+			AssetType="PlayerTemplate"
+			IsAttribute="true" />
+		<EntryReference
+			id="Personality"
+			AssetType="AIPersonalityDefinition"
+			IsAttribute="true" />
+		<EntryReference
+			id="Portrait"
+			AssetType="PackedTextureImage"
+			IsAttribute="true" />
+		<Entry
+			id="Difficulty"
+			AssetType="AIDifficulty"
+			IsAttribute="true" />
+		<Entry
+			id="Team"
+			AssetType="SageUnsignedInt"
+			IsAttribute="true" />
+		<Entry
+			id="StartPosition"
+			AssetType="SageUnsignedInt"
+			IsAttribute="true" />
+		<EntryWeakReference
+			id="Color"
+			AssetType="MultiplayerColor"
+			IsAttribute="true" />
+	</Asset>
+
+	<Asset
+		id="ScenarioTemplate">
+		<EntryPoid
+			id="id"
+			IsAttribute="true" />
+		<Entry
+			id="UiName"
+			AssetType="String"
+			IsAttribute="true" />
+		<Entry
+			id="Title"
+			AssetType="String"
+			IsAttribute="true" />
+		<Entry
+			id="ShortTitle"
+			AssetType="String"
+			IsAttribute="true" />
+		<Entry
+			id="Description"
+			AssetType="String"
+			IsAttribute="true" />
+		<Entry
+			id="MapName"
+			AssetType="String"
+			IsAttribute="true" />
+		<Entry
+			id="PlayerStartPosition"
+			AssetType="SageUnsignedInt"
+			IsAttribute="true" />
+		<Entry
+			id="PlayerTeam"
+			AssetType="SageUnsignedInt"
+			IsAttribute="true" />
+		<EntryWeakReference
+			id="PlayerColor"
+			AssetType="MultiplayerColor"
+			IsAttribute="true"
+			Default="ColorGold" />
+		<Entry
+			id="ParTime"
+			AssetType="Time"
+			IsAttribute="true"
+			Default="0s" />
+		<Entry
+			id="ParTimeScoreBonus"
+			AssetType="SageUnsignedInt"
+			IsAttribute="true" />
+		<Entry
+			id="DifficultyScoreBonus"
+			AssetType="SageUnsignedInt"
+			IsAttribute="true" />
+		<Entry
+			id="MaxEfficiencyScoreMultiplier"
+			AssetType="SageReal"
+			IsAttribute="true"
+			Default="3.0" />
+		<EntryWeakReference
+			id="UnitUnlock"
+			AssetType="GameObject"
+			IsAttribute="true"
+			IsRequired="true" />
+		<EntryList
+			id="Enemy"
+			AssetType="ScenarioEnemy"
+			MinLength="1"
+			MaxLength="5" />
+		<EntryList
+			id="ScenarioUnlock"
+			AssetType="ScenarioTemplateWeakRef"
+			MinLength="0"
+			MaxLength="0" />
+		<Entry
+			id="IsStartingScenario"
+			AssetType="SageBool"
+			IsAttribute="true"
+			Default="false" />
+		<Entry
+			id="IsCriticalPath"
+			AssetType="SageBool"
+			IsAttribute="true"
+			Default="false" />
+		<Entry
+			id="UseRandomCrates"
+			AssetType="SageBool"
+			IsAttribute="true"
+			Default="false" />
+		<Entry
+			id="fill"
+			AssetType="Byte"
+			IsVoid="true" />
+	</Asset>
+
+	<Asset
+		id="UnlockableUnit">
+		<EntryReference
+			id="Faction"
+			AssetType="PlayerTemplate"
+			IsAttribute="true" />
+		<EntryWeakReference
+			id="Name"
+			AssetType="GameObject"
+			IsAttribute="true" />
+	</Asset>
+
+	<GameAsset
+		id="ScenarioManagerData"
+		TypeHash="435433034">
+		<EntryInheritance
+			id="base"
+			AssetType="BaseAssetType" />
+		<Entry
+			id="IntroMovie"
+			AssetType="String"
+			IsAttribute="true" />
+		<Entry
+			id="CriticalPathCompletionMovie"
+			AssetType="String"
+			IsAttribute="true" />
+		<Entry
+			id="FullCompletionMovie"
+			AssetType="String"
+			IsAttribute="true" />
+		<Entry
+			id="MaxRedAlertDeposit"
+			AssetType="SageInt"
+			IsAttribute="true"
+			Default="50000" />
+		<EntryList
+			id="ScenarioTemplate"
+			AssetType="ScenarioTemplate"
+			MinLength="0"
+			MaxLength="0" />
+		<EntryList
+			id="UnlockableUnit"
+			AssetType="UnlockableUnit"
+			MinLength="0"
+			MaxLength="0" />
+	</GameAsset>
+
+</AssetDefinition>

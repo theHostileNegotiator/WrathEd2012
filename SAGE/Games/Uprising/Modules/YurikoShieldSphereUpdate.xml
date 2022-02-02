@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<AssetDefinition xmlns="uri:thundermods.net:SAGE:WrathEdXML:AssetDefinition">
+
+	<Asset
+		id="YurikoShieldSphereUpdateModuleData">
+		<EntryInheritance
+			id="base"
+			AssetType="ShieldSphereUpdateModuleData" />
+		<EntryReference
+			id="MajorShieldHitFX"
+			AssetType="FXList"
+			IsAttribute="true" />
+		<EntryReference
+			id="MinorShieldHitFX"
+			AssetType="FXList"
+			IsAttribute="true" />
+		<EntryReference
+			id="MinorShieldDamageTypes"
+			AssetType="DamageBitFlags"
+			IsAttribute="true" />
+	</Asset>
+
+</AssetDefinition>

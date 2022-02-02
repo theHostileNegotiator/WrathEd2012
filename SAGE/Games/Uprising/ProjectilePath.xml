@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<AssetDefinition xmlns="uri:thundermods.net:SAGE:WrathEdXML:AssetDefinition">
+
+	<Asset
+		id="ProjectilePathNode">
+		<Entry
+			id="InVec"
+			AssetType="Vector4" />
+		<Entry
+			id="Point"
+			AssetType="Vector4" />
+		<Entry
+			id="OutVec"
+			AssetType="Vector4" />
+	</Asset>
+
+	<GameAsset
+		id="ProjectilePath"
+		TypeHash="2376776400">
+		<EntryInheritance
+			id="base"
+			AssetType="BaseInheritableAsset" />
+		<EntryRelocation
+			id="ComponentScale"
+			AssetType="Vector4" />
+		<EntryList
+			id="Node"
+			AssetType="ProjectilePathNode"
+			MinLength="2"
+			MaxLength="0" />
+	</GameAsset>
+
+</AssetDefinition>

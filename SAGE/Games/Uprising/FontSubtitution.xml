@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<AssetDefinition xmlns="uri:thundermods.net:SAGE:WrathEdXML:AssetDefinition">
+
+	<Asset
+		id="Subtitution">
+		<Entry
+			id="Size"
+			AssetType="SageUnsignedInt"
+			IsAttribute="true"
+			IsRequired="true" />
+		<Entry
+			id="Font"
+			AssetType="FontDesc" />
+	</Asset>
+
+	<GameAsset
+		id="FontSubstitution"
+		TypeHash="2789100025">
+		<EntryInheritance
+			id="base"
+			AssetType="BaseInheritableAsset" />
+		<Entry
+			id="Name"
+			AssetType="String"
+			IsAttribute="true"
+			IsRequired="true" />
+		<EntryList
+			id="Substitute"
+			AssetType="Subtitution"
+			MinLength="2"
+			MaxLength="10" />
+	</GameAsset>
+
+</AssetDefinition>

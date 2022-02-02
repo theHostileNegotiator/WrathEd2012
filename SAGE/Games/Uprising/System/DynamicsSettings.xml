@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<AssetDefinition xmlns="uri:thundermods.net:SAGE:WrathEdXML:AssetDefinition">
+
+	<GameAsset
+		id="DynamicsSettings"
+		TypeHash="2620066145">
+		<EntryInheritance
+			id="base"
+			AssetType="BaseInheritableAsset" />
+		<Entry
+			id="MaximumObjects"
+			AssetType="SageInt"
+			IsAttribute="true"
+			Default="1024" />
+		<Entry
+			id="MaximumContacts"
+			AssetType="SageInt"
+			IsAttribute="true"
+			Default="2048" />
+		<Entry
+			id="MaximumContactPairs"
+			AssetType="SageInt"
+			IsAttribute="true"
+			Default="1024" />
+		<Entry
+			id="MaximumJoints"
+			AssetType="SageInt"
+			IsAttribute="true"
+			Default="256" />
+		<Entry
+			id="CreateGlobalIsland"
+			AssetType="SageBool"
+			IsAttribute="true"
+			Default="false" />
+		<Entry
+			id="fill"
+			AssetType="Byte"
+			IsVoid="true" />
+	</GameAsset>
+
+</AssetDefinition>

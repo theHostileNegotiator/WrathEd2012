@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<AssetDefinition xmlns="uri:thundermods.net:SAGE:WrathEdXML:AssetDefinition">
+
+	<Asset
+		id="FontSettings">
+		<Entry
+			id="AntiAliased"
+			AssetType="SageBool"
+			IsAttribute="true"
+			IsRequired="true" />
+		<Entry
+			id="fill"
+			AssetType="Byte"
+			IsVoid="true" />
+	</Asset>
+
+	<GameAsset
+		id="FontDefaultSetting"
+		TypeHash="197748432">
+		<EntryInheritance
+			id="base"
+			AssetType="BaseInheritableAsset" />
+		<Entry
+			id="Name"
+			AssetType="String"
+			IsAttribute="true"
+			IsRequired="true" />
+		<EntryRelocation
+			id="Size"
+			AssetType="SageUnsignedInt" />
+		<Entry
+			id="Settings"
+			AssetType="FontSettings" />
+	</GameAsset>
+
+</AssetDefinition>

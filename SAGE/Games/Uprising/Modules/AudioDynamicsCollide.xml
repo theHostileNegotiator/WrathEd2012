@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<AssetDefinition xmlns="uri:thundermods.net:SAGE:WrathEdXML:AssetDefinition">
+
+	<Asset
+		id="AudioDynamicsCollideModuleData">
+		<EntryInheritance
+			id="base"
+			AssetType="DynamicsCollideModuleData" />
+		<Entry
+			id="MinimumImpactVelocity"
+			AssetType="SageReal"
+			IsAttribute="true"
+			IsRequired="true" />
+		<Entry
+			id="MagnitudeSoundSelector"
+			AssetType="MagnitudeSoundSelectorTable" />
+	</Asset>
+
+	<Asset
+		id="MagnitudeSoundSelectorTable">
+		<EntryList
+			id="Entry"
+			AssetType="MagnitudeSoundSelectorEntry"
+			MinLength="1"
+			MaxLength="0" />
+	</Asset>
+
+	<Asset
+		id="MagnitudeSoundSelectorEntry">
+		<Entry
+			id="MinimumMagnitude"
+			AssetType="SageReal"
+			IsAttribute="true"
+			IsRequired="true" />
+		<EntryReference
+			id="Sound"
+			AssetType="AudioEventInfo"
+			IsAttribute="true"
+			IsRequired="true" />
+	</Asset>
+
+</AssetDefinition>

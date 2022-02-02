@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<AssetDefinition xmlns="uri:thundermods.net:SAGE:WrathEdXML:AssetDefinition">
+
+	<EnumAsset
+		id="ScriptEngineEvent"
+		IsStartingNegative="true">
+		<Entry>INVALID</Entry>
+		<Entry>ON_DAMAGE</Entry>
+		<Entry>ON_CREATE</Entry>
+		<Entry>ON_DIE</Entry>
+	</EnumAsset>
+
+</AssetDefinition>

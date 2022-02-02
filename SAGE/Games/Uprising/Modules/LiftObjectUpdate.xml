@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<AssetDefinition xmlns="uri:thundermods.net:SAGE:WrathEdXML:AssetDefinition">
+
+	<Asset
+		id="LiftedUnitModelStateMap">
+		<Entry
+			id="ModelState"
+			AssetType="ModelConditionBitFlags"
+			IsAttribute="true"
+			IsRequired="true" />
+		<EntryRelocation
+			id="ObjectFilter"
+			AssetType="ObjectFilter"
+			IsAttribute="true" />
+	</Asset>
+
+	<Asset
+		id="LiftedObjectModelStateMapList">
+		<EntryChoice
+			id="LiftedObjectModelStateMapList"
+			MinLength="0"
+			MaxLength="0">
+			<Entry
+				id="LiftedUnitModelStateMap"
+				AssetType="LiftedUnitModelStateMap" />
+		</EntryChoice>
+	</Asset>
+
+	<Asset
+		id="LiftObjectUpdateModuleData">
+		<EntryInheritance
+			id="base"
+			AssetType="UpdateModuleData" />
+		<Entry
+			id="LiftObjectLinkID"
+			AssetType="SageInt"
+			IsAttribute="true"
+			Default="0" />
+		<Entry
+			id="LiftVelocity"
+			AssetType="SageReal"
+			IsAttribute="true" />
+		<Entry
+			id="MaxElevationFromGround"
+			AssetType="SageReal"
+			IsAttribute="true" />
+		<Entry
+			id="TimeIncrement"
+			AssetType="Time"
+			IsAttribute="true"
+			Default="0s" />
+		<Entry
+			id="MaxTimeLifted"
+			AssetType="Time"
+			IsAttribute="true"
+			Default="1s" />
+		<Entry
+			id="MaxStructureShakeVelocity"
+			AssetType="SageReal"
+			IsAttribute="true"
+			Default="0" />
+		<EntryReference
+			id="AirplaneCrashWeapon"
+			AssetType="WeaponTemplate"
+			IsAttribute="true" />
+		<EntryReference
+			id="SoftLandingWeapon"
+			AssetType="WeaponTemplate"
+			IsAttribute="true" />
+		<Entry
+			id="RotationSpeed"
+			AssetType="SageReal"
+			IsAttribute="true"
+			Default="1.0" />
+		<EntryRelocation
+			id="RotationSpeed"
+			AssetType="ShaderOverrideRef"
+			IsAttribute="true" />
+		<Entry
+			id="ShakeIntensity"
+			AssetType="SageReal"
+			IsAttribute="true"
+			Default="1.0" />
+		<Entry
+			id="ShakeRadius"
+			AssetType="SageReal"
+			IsAttribute="true"
+			Default="1.0" />
+		<Entry
+			id="ShakeFade"
+			AssetType="SageReal"
+			IsAttribute="true"
+			Default="1.0" />
+		<Entry
+			id="DisabledTypesToProcess"
+			AssetType="DisabledBitFlags"
+			IsAttribute="true"
+			Default="HELD PARALYZED EMP" />
+		<Entry
+			id="ModelStateObjectFilters"
+			AssetType="LiftedObjectModelStateMapList" />
+		<Entry
+			id="CrusherModifiesVelocity"
+			AssetType="SageBool"
+			IsAttribute="true" />
+		<Entry
+			id="fill"
+			AssetType="Byte"
+			IsVoid="true" />
+	</Asset>
+
+</AssetDefinition>

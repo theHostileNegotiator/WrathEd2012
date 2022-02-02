@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<AssetDefinition xmlns="uri:thundermods.net:SAGE:WrathEdXML:AssetDefinition">
+
+	<EnumAsset
+		id="BeamOptionsType">
+		<Entry>SWEEP_LEFT</Entry>
+		<Entry>SWEEP_RIGHT</Entry>
+		<Entry>SWEEP_CRISSCROSS</Entry>
+		<Entry>DIAGONAL_SWEEPING</Entry>
+		<Entry>FIRES_MULTIPLE_LASERS</Entry>
+	</EnumAsset>
+
+	<FlagsAsset
+		id="BeamOptionsBitFlags"
+		BaseEnum="BeamOptionsType" />
+
+	<Asset
+		id="BeamSpecialAbilityUpdateModuleData">
+		<EntryInheritance
+			id="base"
+			AssetType="SpecialAbilityUpdateModuleData" />
+		<EntryReference
+			id="TargetAttributeModifierAdd"
+			AssetType="AttributeModifier"
+			IsAttribute="true" />
+		<EntryRelocation
+			id="TargetObjectStatusAdd"
+			AssetType="ObjectStatusBitFlags"
+			IsAttribute="true" />
+		<EntryReference
+			id="SweepFX"
+			AssetType="FXList"
+			IsAttribute="true" />
+		<Entry
+			id="ReflectorExtendDistance"
+			AssetType="SageReal"
+			IsAttribute="true"
+			Default="0" />
+		<Entry
+			id="PreferredTargetBone"
+			AssetType="String"
+			IsAttribute="true" />
+		<EntryReference
+			id="WeaponTemplate"
+			AssetType="WeaponTemplate"
+			IsAttribute="true" />
+		<Entry
+			id="BeamOptions"
+			AssetType="BeamOptionsBitFlags"
+			IsAttribute="true"
+			Default="" />
+		<Entry
+			id="BeamDuration"
+			AssetType="Time"
+			IsAttribute="true"
+			Default="0s" />
+		<Entry
+			id="SweepDistance"
+			AssetType="SageReal"
+			IsAttribute="true"
+			Default="0.0" />
+		<Entry
+			id="DamageInterval"
+			AssetType="Time"
+			IsAttribute="true"
+			Default="0s" />
+		<Entry
+			id="JoinWithOtherBeams"
+			AssetType="SageBool"
+			IsAttribute="true"
+			Default="false" />
+		<Entry
+			id="DissapateWhenTargetDead"
+			AssetType="SageBool"
+			IsAttribute="true"
+			Default="true" />
+		<Entry
+			id="LineType"
+			AssetType="SageBool"
+			IsAttribute="true"
+			Default="false" />
+		<Entry
+			id="TargetSamePlayerOnly"
+			AssetType="SageBool"
+			IsAttribute="true"
+			Default="false" />
+	</Asset>
+
+</AssetDefinition>
