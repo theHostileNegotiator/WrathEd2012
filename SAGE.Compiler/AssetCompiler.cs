@@ -79,6 +79,12 @@ namespace SAGE.Compiler
                             break;
                         }
                     }
+					// Hack
+					if (game.ManifestVersion >= 6)
+					{
+						if ((referenceIndex >= 0) && (referenceIndex < assetReferences.Count))
+							isImport = true;
+					}
                     if (isImport)
                     {
                         bool isFound = false;
@@ -618,6 +624,12 @@ namespace SAGE.Compiler
                             break;
                         }
                     }
+					// Hack
+					if (game.ManifestVersion >= 6)
+					{
+						if ((referenceIndex >= 0) && (referenceIndex < assetReferences.Count))
+						isImport = true;
+					}
                     if (isImport)
                     {
                         bool isFound = false;
@@ -1148,6 +1160,13 @@ namespace SAGE.Compiler
                     int binPosition = 4;
                     if (assetType.Runtime == null)
                     {
+                        if (assetType.IsTokenized)
+                        {
+                            // Go to first token offset and start decompiling here. Hacky, maybe
+                            binPosition += 4 - (binPosition % 4);
+                            binPosition = FileHelper.GetInt(binPosition, bin);
+                        }
+
                         foreach (BaseEntryType entry in assetType.Entries)
                         {
                             DecompileEntry(stream, referencedStreams, entry, document, xmlAsset, assetReferences, bin, imp, relo, ref binPosition);
@@ -1304,6 +1323,14 @@ namespace SAGE.Compiler
                                 {
                                     if (assetType.Entries != null)
                                     {
+                                        if (assetType.IsTokenized)
+                                        {
+											// Build Tokens first then data
+											// Calc 1st Offset by determining entry list length + elements... probably
+											// Name, Type, Offset
+											// Name is StringHash
+											// Type ...? Hack, use same method as TypeHash, matching TypeHash with AssetType but hardcoded
+                                        }
                                         foreach (BaseEntryType entry in assetType.Entries)
                                         {
                                             if (!entry.Compile(baseUri, asset.Binary, element, game, asset.Name, ref position, out ErrorDescription))

@@ -447,6 +447,7 @@ namespace SAGE
 				Runtime = new RuntimeType(asset.Runtime);
 			}
 			TypeHash = asset.TypeHash;
+			IsTokenized = asset.IsTokenized;
 			HasSpecialCompileHandling = asset.HasSpecialCompileHandling;
 		}
 
