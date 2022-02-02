@@ -40,6 +40,7 @@ namespace SAGE
 		public string[] Enums { get; protected set; }
 		public bool IsUsingAll { get; protected set; }
 		public bool IsStartingNegative { get; protected set; }
+		public int StartingValue { get; protected set; }
 
 		public EnumAssetType(WrathEdXML.AssetDefinition.EnumAssetType asset)
 			: base(asset)
@@ -47,6 +48,7 @@ namespace SAGE
 			Enums = asset.Entry;
 			IsUsingAll = asset.IsUsingAll;
 			IsStartingNegative = asset.IsStartingNegative;
+			StartingValue = asset.StartingValue;
 		}
 
 		public override int GetLength(GameDefinition game)
@@ -60,7 +62,7 @@ namespace SAGE
 			{
 				return Enums[index + 1];
 			}
-			return Enums[index];
+			return Enums[index - StartingValue];
 		}
 
 		public string GetValue(uint index)
@@ -69,7 +71,7 @@ namespace SAGE
 			{
 				return Enums[index + 1];
 			}
-			return Enums[index];
+			return Enums[index - (uint)StartingValue];
 		}
 
 		public uint GetValue(string name)
@@ -80,7 +82,7 @@ namespace SAGE
 				{
 					return 0xFFFFFFFF;
 				}
-				return 0x00000000;
+				return 0x00000000 + (uint)StartingValue;
 			}
 			for (uint idx = 0; idx < Enums.Length; ++idx)
 			{
@@ -90,14 +92,14 @@ namespace SAGE
 					{
 						return idx - 1;
 					}
-					return idx;
+					return idx + (uint)StartingValue;
 				}
 			}
 			if (IsStartingNegative)
 			{
 				return 0xFFFFFFFF;
 			}
-			return 0x00000000;
+			return 0x00000000 + (uint)StartingValue;;
 		}
 	}
 
@@ -134,7 +136,7 @@ namespace SAGE
 		public int NumSpans(GameDefinition game)
 		{
 			EnumAssetType enumAsset = GetBaseEnum(game);
-			return (enumAsset.Enums.Length + BitsInSpan - ((enumAsset.IsStartingNegative) ? 2 : 1)) / BitsInSpan;
+			return (enumAsset.Enums.Length + BitsInSpan - ((enumAsset.IsStartingNegative) ? 2 : 1 + -enumAsset.StartingValue)) / BitsInSpan;
 		}
 
 		public bool GetUsingAll(GameDefinition game)
@@ -155,7 +157,7 @@ namespace SAGE
 			{
 				for (int bit = 0; bit < BitsInSpan; ++bit)
 				{
-					if (span * BitsInSpan + bit == enumAsset.Enums.Length - ((enumAsset.IsStartingNegative) ? 1 : 0))
+					if (span * BitsInSpan + bit == enumAsset.Enums.Length - ((enumAsset.IsStartingNegative) ? 1 : 0 + -enumAsset.StartingValue))
 					{
 						return null;
 					}

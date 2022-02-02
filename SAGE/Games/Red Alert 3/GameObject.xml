@@ -1098,12 +1098,11 @@
 			id="TypeDescriptionTransformed"
 			AssetType="String"
 			IsAttribute="true" />
-		<!-- Placeholder type until Enum start at -2 -->
 		<Entry
 			id="RadarPriority"
-			AssetType="SageInt"
+			AssetType="RadarPriorityType"
 			IsAttribute="true"
-			Default="-2" />
+			Default="INVALID" />
 		<Entry
 			id="FenceWidth"
 			AssetType="SageReal"

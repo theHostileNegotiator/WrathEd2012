@@ -24,6 +24,7 @@
 				</xs:sequence>
 				<xs:attribute name="IsUsingAll" type="xs:boolean" default="false" />
 				<xs:attribute name="IsStartingNegative" type="xs:boolean" default="false" />
+				<xs:attribute name="StartingValue" type="xs:int" default="0" />
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>

@@ -26,10 +26,14 @@ namespace SAGE.WrathEdXML.AssetDefinition
 		[XmlAttribute()]
 		public bool IsStartingNegative { get; set; }
 
+		[XmlAttribute()]
+		public int StartingValue { get; set; }
+
 		public EnumAssetType()
 		{
 			IsUsingAll = false;
 			IsStartingNegative = false;
+			StartingValue = 0;
 		}
 	}
 

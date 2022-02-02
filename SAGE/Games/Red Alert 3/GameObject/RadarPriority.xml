@@ -1,11 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <AssetDefinition xmlns="uri:thundermods.net:SAGE:WrathEdXML:AssetDefinition">
 
-<!-- Needs to start at -2 -->
-
 	<EnumAsset
 		id="RadarPriorityType"
-		IsStartingNegative="true">
+		StartingValue="-2">
 		<Entry>NOT_ON_RADAR</Entry>
 		<Entry>INVALID</Entry>
 		<Entry>STRUCTURE</Entry>
