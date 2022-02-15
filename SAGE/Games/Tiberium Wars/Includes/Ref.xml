@@ -155,4 +155,11 @@
 			AssetType="WeaponTemplate" />
 	</Asset>
 
+	<Asset
+		id="HotKeySlotRef">
+		<EntryReference
+			id="HotKeySlot"
+			AssetType="HotKeySlot" />
+	</Asset>
+
 </AssetDefinition>
