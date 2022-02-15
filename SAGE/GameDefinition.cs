@@ -23,6 +23,7 @@ namespace SAGE
 	public class GameDefinition
 	{
 		public string id { get; private set; }
+		public string inheritDefinitions { get; private set; }
 		public short ManifestVersion { get; private set; }
 		public uint AllTypesHash { get; private set; }
 		public string WorldBuilderVersion { get; private set; }
@@ -31,12 +32,14 @@ namespace SAGE
 		public List<StreamDefinition> Streams { get; private set; }
 		public AssetDefinition Assets { get; private set; }
 		public string DefinitionPath { get; private set; }
+		public string BaseDefinitionPath { get; private set; }
 
 		public GameDefinition(Game game, Func<string, bool> status)
 		{
 			if (game != null)
 			{
 				id = game.id;
+				inheritDefinitions = game.inheritDefinitions;
 				ManifestVersion = game.ManifestVersion;
 				AllTypesHash = game.AllTypesHash;
 				WorldBuilderVersion = game.WorldBuilderVersion;
@@ -66,6 +69,16 @@ namespace SAGE
 					id);
 				Assets = new AssetDefinition();
 				getAssetDefinitions(new DirectoryInfo(DefinitionPath), status);
+				if (!String.IsNullOrEmpty(inheritDefinitions))
+				{
+					BaseDefinitionPath = string.Format(
+						"{0}{1}Games{1}{2}",
+						Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location),
+						Path.DirectorySeparatorChar,
+						inheritDefinitions);
+
+					getInheritedAssetDefinitions(new DirectoryInfo(BaseDefinitionPath), status, id, inheritDefinitions);
+				}
 				foreach (BaseAssetType asset in Assets.AssetTypes)
 				{
 					if (asset.GetType() == typeof(AssetType))
@@ -120,6 +133,51 @@ namespace SAGE
 				}
 				status(fileInfo.Name);
 				Assets.Merge(new AssetDefinition(WrathEdXML.AssetDefinition.AssetDefinition.Load(fileInfo.FullName)));
+			}
+		}
+		
+		private void getInheritedAssetDefinitions(DirectoryInfo source, Func<string, bool> status, string CurrentGameDefinition, string BaseGameDefinition)
+		{
+			foreach (DirectoryInfo directoryInfo in source.GetDirectories())
+			{
+				getInheritedAssetDefinitions(directoryInfo, status, CurrentGameDefinition, BaseGameDefinition);
+			}
+			foreach (FileInfo basefileInfo in source.GetFiles())
+			{
+				if (basefileInfo.Extension != ".xml")
+				{
+					continue;
+				}
+
+				string ToolPath = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+
+				string BaseGameDefPath = source.FullName.Substring(ToolPath.Length);
+				string GameDefPath = ToolPath + BaseGameDefPath.Replace(BaseGameDefinition, CurrentGameDefinition);
+				
+				DirectoryInfo GameDefPathDir = new DirectoryInfo(GameDefPath);
+				
+				bool DefFileExist = false;
+				
+				if (GameDefPathDir.Exists){
+					foreach (FileInfo fileInfo in GameDefPathDir.GetFiles())
+					{
+						if (fileInfo.Extension != ".xml")
+						{
+							continue;
+						}
+						if (basefileInfo.Name == fileInfo.Name)
+						{
+							DefFileExist = true;
+							break;
+						}
+					}
+				}
+				if (!DefFileExist)
+				{
+					status(basefileInfo.Name);
+					Assets.Merge(new AssetDefinition(WrathEdXML.AssetDefinition.AssetDefinition.Load(basefileInfo.FullName)));
+				}
+				
 			}
 		}
 	}

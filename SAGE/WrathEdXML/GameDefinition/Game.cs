@@ -54,6 +54,9 @@ namespace SAGE.WrathEdXML.GameDefinition
 		public string id { get; set; }
 
 		[XmlAttribute()]
+		public string inheritDefinitions { get; set; }
+
+		[XmlAttribute()]
 		public short ManifestVersion { get; set; }
 
 		[XmlAttribute()]
