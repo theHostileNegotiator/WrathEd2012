@@ -725,7 +725,41 @@ namespace SAGE.Compiler
                         if (baseAssetType.id == entry.AssetType)
                         {
                             Type assetTypeType = baseAssetType.GetType();
-                            if (assetTypeType == typeof(AssetType))
+                            if (assetTypeType == typeof(EnumAssetType))
+                            {
+                                EnumAssetType asset = baseAssetType as EnumAssetType;
+                                element.InnerText += asset.GetValue(FileHelper.GetUInt(binPosition, bin));
+                                binPosition += 4;
+                            }
+							else if (assetTypeType == typeof(FlagsAssetType))
+                            {
+                                FlagsAssetType asset = baseAssetType as FlagsAssetType;
+                                int numSpans = asset.NumSpans(game);
+                                uint[] flags = new uint[numSpans];
+                                for (int idx = 0; idx < numSpans; ++idx)
+                                {
+                                    flags[idx] = FileHelper.GetUInt(binPosition, bin);
+                                    binPosition += 4;
+                                }
+                                StringBuilder flagsStringBuilder = new StringBuilder();
+                                for (int idx = 0; idx < numSpans; ++idx)
+                                {
+                                    for (int idy = 0; idy < FlagsAssetType.BitsInSpan; ++idy)
+                                    {
+                                        if ((flags[idx] & (1 << idy)) != 0)
+                                        {
+                                            flagsStringBuilder.Append(asset.GetValue(idx, idy, game));
+                                            flagsStringBuilder.Append(" ");
+                                        }
+                                    }
+                                }
+                                if (flagsStringBuilder.Length != 0)
+                                {
+                                    flagsStringBuilder.Remove(flagsStringBuilder.Length - 1, 1);
+                                }
+                                element.InnerText += flagsStringBuilder.ToString();
+                            }
+                            else if (assetTypeType == typeof(AssetType))
                             {
                                 AssetType assetType = baseAssetType as AssetType;
                                 foreach (BaseEntryType assetEntry in assetType.Entries)
