@@ -16,8 +16,7 @@
 		BaseEnum="WeaponSlotType" />
 
 	<EnumAsset
-		id="TimeOfDayType"
-		IsStartingNegative="true">
+		id="TimeOfDayType">
 		<Entry>INVALID</Entry>
 		<Entry>MORNING</Entry>
 		<Entry>AFTERNOON</Entry>

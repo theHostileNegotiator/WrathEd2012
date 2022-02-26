@@ -1,0 +1,509 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<AssetDefinition xmlns="uri:thundermods.net:SAGE:WrathEdXML:AssetDefinition">
+
+	<Asset
+		id="MusicScriptConditionNuggetBase">
+		<EntryInheritance
+			id="base"
+			AssetType="BaseAssetType" />
+	</Asset>
+
+	<Asset
+		id="MusicScriptConditionRef">
+		<EntryReference
+			id="MusicScriptConditionNuggetBase"
+			AssetType="MusicScriptConditionNuggetBase" />
+	</Asset>
+
+	<Asset
+		id="MusicScriptTrackRef">
+		<EntryReference
+			id="MusicScriptTrack"
+			AssetType="MusicScriptTrack" />
+	</Asset>
+
+	<EnumAsset
+		id="ScreenStatus">
+		<Entry>ON_SCREEN</Entry>
+		<Entry>OFF_SCREEN</Entry>
+		<Entry>ON_OR_OFF_SCREEN</Entry>
+	</EnumAsset>
+
+	<Asset
+		id="MusicScriptConditionExpensiveNuggetBase">
+		<EntryInheritance
+			id="base"
+			AssetType="MusicScriptConditionNuggetBase" />
+		<Entry
+			id="TimeBetweenConditionChecks"
+			AssetType="Time"
+			IsAttribute="true"
+			Default="5s" />
+	</Asset>
+
+	<GameAsset
+		id="MusicScriptConditionNugget_LocalPlayerIsObserver"
+		TypeHash="2947985210">
+		<EntryInheritance
+			id="base"
+			AssetType="MusicScriptConditionNuggetBase" />
+		<Entry
+			id="CountDeadPlayersAsObservers"
+			AssetType="SageBool"
+			IsAttribute="true"
+			IsRequired="true" />
+		<Entry
+			id="fill"
+			AssetType="Byte"
+			IsVoid="true" />
+	</GameAsset>
+
+	<GameAsset
+		id="MusicScriptConditionNugget_UnitsFarFromBase"
+		TypeHash="3632906136">
+		<EntryInheritance
+			id="base"
+			AssetType="MusicScriptConditionExpensiveNuggetBase" />
+		<Entry
+			id="MinUnitsToPass"
+			AssetType="SageInt"
+			IsAttribute="true"
+			IsRequired="true" />
+		<Entry
+			id="MinDistanceFromBase"
+			AssetType="SageReal"
+			IsAttribute="true"
+			IsRequired="true" />
+		<Entry
+			id="Relationship"
+			AssetType="ObjectFilterRelationshipBitMask"
+			IsAttribute="true"
+			IsRequired="true" />
+	</GameAsset>
+
+	<GameAsset
+		id="MusicScriptConditionNugget_TimeFromStartOfLevel"
+		TypeHash="2857016867">
+		<EntryInheritance
+			id="base"
+			AssetType="MusicScriptConditionNuggetBase" />
+		<Entry
+			id="Timeout"
+			AssetType="Time"
+			IsAttribute="true"
+			IsRequired="true" />
+	</GameAsset>
+
+	<GameAsset
+		id="MusicScriptConditionNugget_TrackPlayedCount"
+		TypeHash="1339030193">
+		<EntryInheritance
+			id="base"
+			AssetType="MusicScriptConditionNuggetBase" />
+		<EntryWeakReference
+			id="Track"
+			AssetType="MusicScriptTrack"
+			IsAttribute="true"
+			IsRequired="true" />
+		<Entry
+			id="Count"
+			AssetType="SageInt"
+			IsAttribute="true"
+			IsRequired="true" />
+	</GameAsset>
+
+	<GameAsset
+		id="MusicScriptConditionNugget_SpecificTrackTypePlaying"
+		TypeHash="3165494135">
+		<EntryInheritance
+			id="base"
+			AssetType="MusicScriptConditionNuggetBase" />
+		<EntryPoid
+			id="TrackType"
+			IsAttribute="true"
+			IsRequired="true" />
+	</GameAsset>
+
+	<GameAsset
+		id="MusicScriptConditionNugget_AnyTrackPlaying"
+		TypeHash="863748902">
+		<EntryInheritance
+			id="base"
+			AssetType="MusicScriptConditionNuggetBase" />
+	</GameAsset>
+
+	<GameAsset
+		id="MusicScriptConditionNugget_ObjectsOfTypeExist"
+		TypeHash="2508603676">
+		<EntryInheritance
+			id="base"
+			AssetType="MusicScriptConditionExpensiveNuggetBase" />
+		<Entry
+			id="Count"
+			AssetType="SageInt"
+			IsAttribute="true"
+			Default="1" />
+		<Entry
+			id="RequiredModelConditions"
+			AssetType="ModelConditionBitFlags"
+			IsAttribute="true"
+			Default="" />
+		<Entry
+			id="ExcludedModelConditions"
+			AssetType="ModelConditionBitFlags"
+			IsAttribute="true"
+			Default="" />
+		<EntryRelocation
+			id="Filter"
+			AssetType="ObjectFilter" />
+	</GameAsset>
+
+	<GameAsset
+		id="MusicScriptConditionNugget_EvaEventPlayedRecently"
+		TypeHash="522194707">
+		<EntryInheritance
+			id="base"
+			AssetType="MusicScriptConditionNuggetBase" />
+		<EntryReference
+			id="EvaEvent"
+			AssetType="EvaEvent"
+			IsAttribute="true"
+			IsRequired="true" />
+		<Entry
+			id="Timeout"
+			AssetType="Time"
+			IsAttribute="true"
+			Default="1s" />
+	</GameAsset>
+
+	<GameAsset
+		id="MusicScriptConditionNugget_ObjectsNearEvaEvent"
+		TypeHash="247779680">
+		<EntryInheritance
+			id="base"
+			AssetType="MusicScriptConditionExpensiveNuggetBase" />
+		<EntryReference
+			id="EvaEvent"
+			AssetType="EvaEvent"
+			IsAttribute="true"
+			IsRequired="true" />
+		<Entry
+			id="Count"
+			AssetType="SageInt"
+			IsAttribute="true"
+			Default="1" />
+		<Entry
+			id="Distance"
+			AssetType="SageReal"
+			IsAttribute="true"
+			IsRequired="true" />
+		<EntryRelocation
+			id="Filter"
+			AssetType="ObjectFilter" />
+	</GameAsset>
+
+	<GameAsset
+		id="MusicScriptConditionNugget_ScoredKillCount"
+		TypeHash="3267267860">
+		<EntryInheritance
+			id="base"
+			AssetType="MusicScriptConditionNuggetBase" />
+		<Entry
+			id="Count"
+			AssetType="SageInt"
+			IsAttribute="true"
+			IsRequired="true" />
+		<Entry
+			id="Time"
+			AssetType="Time"
+			IsAttribute="true"
+			IsRequired="true" />
+		<EntryReference
+			id="Filter"
+			AssetType="ObjectFilterAsset"
+			IsAttribute="true" />
+		<Entry
+			id="CountOnlyKillsAgainstTheLocalPlayer"
+			AssetType="SageBool"
+			IsAttribute="true"
+			IsRequired="true" />
+		<Entry
+			id="CountOnlyKillsByTheLocalPlayer"
+			AssetType="SageBool"
+			IsAttribute="true"
+			IsRequired="true" />
+		<Entry
+			id="fill"
+			AssetType="Byte"
+			IsVoid="true" />
+	</GameAsset>
+
+	<GameAsset
+		id="MusicScriptConditionNugget_Not"
+		TypeHash="855988878">
+		<EntryInheritance
+			id="base"
+			AssetType="MusicScriptConditionNuggetBase" />
+		<Entry
+			id="Condition"
+			AssetType="MusicScriptConditionRef" />
+	</GameAsset>
+
+	<GameAsset
+		id="MusicScriptConditionNugget_Or"
+		TypeHash="4074957085">
+		<EntryInheritance
+			id="base"
+			AssetType="MusicScriptConditionNuggetBase" />
+		<EntryList
+			id="Condition"
+			AssetType="MusicScriptConditionRef"
+			MinLength="2"
+			MaxLength="0" />
+	</GameAsset>
+
+	<GameAsset
+		id="MusicScriptConditionNugget_And"
+		TypeHash="532337471">
+		<EntryInheritance
+			id="base"
+			AssetType="MusicScriptConditionNuggetBase" />
+		<EntryList
+			id="Condition"
+			AssetType="MusicScriptConditionRef"
+			MinLength="2"
+			MaxLength="0" />
+	</GameAsset>
+
+	<GameAsset
+		id="MusicScriptConditionNugget_PathMusicStateLastActive"
+		TypeHash="2349512303">
+		<EntryInheritance
+			id="base"
+			AssetType="MusicScriptConditionNuggetBase" />
+		<EntryWeakReference
+			id="TrackedState"
+			AssetType="PathMusicGameDynamicState"
+			IsAttribute="true"
+			IsRequired="true" />
+		<Entry
+			id="TrackedStateChange"
+			AssetType="StateChangeType"
+			IsAttribute="true"
+			IsRequired="true" />
+		<Entry
+			id="TimeSinceLastActive"
+			AssetType="Time"
+			IsAttribute="true"
+			IsRequired="true" />
+		<Entry
+			id="TimeSinceLastActiveOP"
+			AssetType="ComparisonOperator"
+			IsAttribute="true"
+			IsRequired="true" />
+	</GameAsset>
+
+	<GameAsset
+		id="MusicScriptConditionNugget_PathMusicStateCurrentlyActive"
+		TypeHash="3386360116">
+		<EntryInheritance
+			id="base"
+			AssetType="MusicScriptConditionNuggetBase" />
+		<EntryWeakReference
+			id="TrackedState"
+			AssetType="PathMusicGameDynamicState"
+			IsAttribute="true"
+			IsRequired="true" />
+	</GameAsset>
+
+	<GameAsset
+		id="MusicScriptConditionNugget_EngagementCount"
+		TypeHash="3050031378">
+		<EntryInheritance
+			id="base"
+			AssetType="MusicScriptConditionExpensiveNuggetBase" />
+		<Entry
+			id="Count"
+			AssetType="SageInt"
+			IsAttribute="true"
+			IsRequired="true" />
+		<Entry
+			id="Time"
+			AssetType="Time"
+			IsAttribute="true"
+			IsRequired="true" />
+		<Entry
+			id="RequiredScreenStatus"
+			AssetType="ScreenStatus"
+			IsAttribute="true"
+			IsRequired="true" />
+		<EntryRelocation
+			id="TargetFilter"
+			AssetType="ObjectFilterAssetRef"
+			IsAttribute="true" />
+		<Entry
+			id="CountOnlyEngagementsAgainstTheLocalPlayer"
+			AssetType="SageBool"
+			IsAttribute="true"
+			IsRequired="true" />
+		<Entry
+			id="CountOnlyEngagementsByTheLocalPlayer"
+			AssetType="SageBool"
+			IsAttribute="true"
+			IsRequired="true" />
+		<Entry
+			id="fill"
+			AssetType="Byte"
+			IsVoid="true" />
+	</GameAsset>
+
+	<GameAsset
+		id="MusicScriptConditionNugget_LocalPlayerKillRatio"
+		TypeHash="3311890413">
+		<EntryInheritance
+			id="base"
+			AssetType="MusicScriptConditionExpensiveNuggetBase" />
+		<Entry
+			id="Time"
+			AssetType="Time"
+			IsAttribute="true"
+			IsRequired="true" />
+		<Entry
+			id="Ratio"
+			AssetType="SageReal"
+			IsAttribute="true"
+			IsRequired="true" />
+		<Entry
+			id="RatioOp"
+			AssetType="ComparisonOperator"
+			IsAttribute="true"
+			IsRequired="true" />
+	</GameAsset>
+
+	<GameAsset
+		id="MusicScriptConditionNugget_HitBySuperWeapon"
+		TypeHash="607961670">
+		<EntryInheritance
+			id="base"
+			AssetType="MusicScriptConditionNuggetBase" />
+		<EntryWeakReference
+			id="TrackedWeapon"
+			AssetType="WeaponTemplate"
+			IsAttribute="true"
+			IsRequired="true" />
+		<Entry
+			id="Time"
+			AssetType="Time"
+			IsAttribute="true"
+			IsRequired="true" />
+		<Entry
+			id="Count"
+			AssetType="SageInt"
+			IsAttribute="true"
+			IsRequired="true" />
+		<EntryRelocation
+			id="TargetFilter"
+			AssetType="ObjectFilterAssetRef"
+			IsAttribute="true" />
+		<Entry
+			id="CountOnlyHitsAgainstTheLocalPlayer"
+			AssetType="SageBool"
+			IsAttribute="true"
+			IsRequired="true" />
+		<Entry
+			id="fill"
+			AssetType="Byte"
+			IsVoid="true" />
+	</GameAsset>
+
+	<Asset
+		id="MusicScriptTimeoutSpecifier">
+		<Entry
+			id="Weight"
+			AssetType="SageInt"
+			IsAttribute="true"
+			Default="1000" />
+		<Entry
+			id="Duration"
+			AssetType="Time"
+			IsAttribute="true"
+			IsRequired="true" />
+	</Asset>
+
+	<GameAsset
+		id="MusicScriptTrack"
+		TypeHash="1881965575">
+		<EntryInheritance
+			id="base"
+			AssetType="BaseAssetType" />
+		<EntryPoid
+			id="TrackTypeKey"
+			IsAttribute="true" />
+		<Entry
+			id="Level"
+			AssetType="SageInt"
+			IsAttribute="true"
+			IsRequired="true" />
+		<Entry
+			id="Priority"
+			AssetType="SageInt"
+			IsAttribute="true"
+			IsRequired="true" />
+		<EntryRelocation
+			id="Condition"
+			AssetType="MusicScriptConditionRef"
+			IsAttribute="true" />
+		<EntryReference
+			id="Track"
+			AssetType="AudioEventInfo"
+			IsAttribute="true"
+			IsRequired="true" />
+		<EntryList
+			id="Timeout"
+			AssetType="MusicScriptTimeoutSpecifier"
+			MinLength="0"
+			MaxLength="0" />
+		<Entry
+			id="ConditionsAreLatch"
+			AssetType="SageBool"
+			IsAttribute="true"
+			Default="false" />
+		<Entry
+			id="FadeInTrack"
+			AssetType="SageBool"
+			IsAttribute="true"
+			Default="false" />
+		<Entry
+			id="FadeOutLowerLevelTrack"
+			AssetType="SageBool"
+			IsAttribute="true"
+			Default="true" />
+		<Entry
+			id="fill"
+			AssetType="Byte"
+			IsVoid="true" />
+	</GameAsset>
+
+	<GameAsset
+		id="MusicPalette"
+		TypeHash="3647979872">
+		<EntryInheritance
+			id="base"
+			AssetType="BaseAssetType" />
+		<EntryList
+			id="Track"
+			AssetType="MusicScriptTrackRef"
+			MinLength="0"
+			MaxLength="0" />
+		<Entry
+			id="IsDefaultForNewMap"
+			AssetType="SageBool"
+			IsAttribute="true"
+			Default="false" />
+		<Entry
+			id="fill"
+			AssetType="Byte"
+			IsVoid="true" />
+	</GameAsset>
+
+</AssetDefinition>

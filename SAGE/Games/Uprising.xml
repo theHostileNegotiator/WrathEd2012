@@ -29,9 +29,6 @@
 		Name="data/worldbuilder"
 		Description="WorldBuilder" />
 	<Stream
-		Name="data/metagame"
-		Description="MetaGame" />
-	<Stream
 		Name="data/mapmetadata"
 		Description="MapMetaData" />
 	<Stream

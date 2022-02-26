@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<AssetDefinition xmlns="uri:thundermods.net:SAGE:WrathEdXML:AssetDefinition">
+
+	<GameAsset
+		id="MultiplayerSettings"
+		TypeHash="483073677">
+		<EntryInheritance
+			id="base"
+			AssetType="BaseAssetType" />
+		<Entry
+			id="InitialCreditsVeryLow"
+			AssetType="SageInt" />
+		<Entry
+			id="InitialCreditsLow"
+			AssetType="SageInt" />
+		<Entry
+			id="InitialCreditsMedium"
+			AssetType="SageInt" />
+		<Entry
+			id="InitialCreditsHigh"
+			AssetType="SageInt" />
+		<Entry
+			id="InitialCreditsVeryHigh"
+			AssetType="SageInt" />
+		<Entry
+			id="StartCountdownTimer"
+			AssetType="SageInt" />
+		<Entry
+			id="MaxBeaconsPerPlayer"
+			AssetType="SageInt" />
+		<Entry
+			id="UseShroud"
+			AssetType="SageBool" />
+		<Entry
+			id="ShowRandomPlayerTemplate"
+			AssetType="SageBool" />
+		<Entry
+			id="ShowRandomStartPos"
+			AssetType="SageBool" />
+		<Entry
+			id="ShowRandomColor"
+			AssetType="SageBool" />
+	</GameAsset>
+
+</AssetDefinition>

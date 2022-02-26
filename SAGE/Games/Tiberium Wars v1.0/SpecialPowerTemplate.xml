@@ -27,7 +27,6 @@
 		<Entry>NOT_WHILE_BENEATH_BRIDGE</Entry>
 		<Entry>DISABLE_FOR_MULTIPLE_SELECTION</Entry>
 		<Entry>CHECK_SPECIALPOWERSTORE_CANUSE</Entry>
-		<Entry>USE_CHAINED_COMMAND_MONEY</Entry>
 	</EnumAsset>
 
 	<FlagsAsset

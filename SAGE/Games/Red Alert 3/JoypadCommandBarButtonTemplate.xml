@@ -103,9 +103,9 @@
 		<EntryInheritance
 			id="base"
 			AssetType="BaseAssetType" />
-		<EntryReference
+		<Entry
 			id="Data"
-			AssetType="JoypadCommandBarButtonTemplateData" />
+			AssetType="JoypadCommandBarButtonTemplateDataRef" />
 	</GameAsset>
 
 </AssetDefinition>

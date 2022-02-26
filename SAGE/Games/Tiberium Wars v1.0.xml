@@ -39,7 +39,4 @@
 	<Stream
 		Name="data/stringhashes"
 		Description="Stringhashes" />
-	<Stream
-		Name="data/mod"
-		Description="Mod" />
 </Game>

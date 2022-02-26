@@ -54,9 +54,10 @@
 			AssetType="StyleName"
 			IsAttribute="true"
 			IsRequired="true" />
+		<!-- String does not work for some reason -->
 		<EntryList
 			id="Text"
-			AssetType="String"
+			AssetType="SageInt"
 			MinLength="0"
 			MaxLength="0" />
 	</Asset>

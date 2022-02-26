@@ -221,9 +221,10 @@
 			IsAttribute="true"
 			Default="1.25" />
 		<Entry
-			id="fill"
-			AssetType="Byte"
-			IsVoid="true" />
+			id="FractionBlockedToDestroyWalls"
+			AssetType="SageReal"
+			IsAttribute="true"
+			Default="0.5" />
 		<EntryList
 			id="TargetBias"
 			AssetType="TargetBiasInfo"

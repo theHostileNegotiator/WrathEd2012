@@ -7,6 +7,10 @@
 			id="base"
 			AssetType="BaseAssetType" />
 		<Entry
+			id="fill"
+			AssetType="Byte"
+			IsVoid="true" />
+		<Entry
 			id="MicrophonePreferredFractionCameraToGround"
 			AssetType="Percentage"
 			IsAttribute="true"

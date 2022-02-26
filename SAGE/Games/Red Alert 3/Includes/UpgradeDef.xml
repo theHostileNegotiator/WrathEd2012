@@ -12,6 +12,7 @@
 		<Entry>DO_NOT_TRANSFER</Entry>
 		<Entry>PERSISTS_IN_CAMPAIGN</Entry>
 		<Entry>NO_UPGRADE_DISCOUNT</Entry>
+		<Entry>OBJECT_UPGRADE_PROJECTED</Entry>
 	</EnumAsset>
 
 </AssetDefinition>
