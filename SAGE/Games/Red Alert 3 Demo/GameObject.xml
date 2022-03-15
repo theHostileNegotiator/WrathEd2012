@@ -1101,8 +1101,7 @@
 		<Entry
 			id="RadarPriority"
 			AssetType="RadarPriorityType"
-			IsAttribute="true"
-			Default="INVALID" />
+			IsAttribute="true" />
 		<Entry
 			id="FenceWidth"
 			AssetType="SageReal"
