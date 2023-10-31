@@ -29,6 +29,8 @@ namespace WrathEd
         private GameStream gameStream;
         private string singleManifest;
 
+        public bool showOutput;
+
         public BigView()
         {
             uint achievementID = (uint)AchievementType.GETTING_STARTED;
@@ -395,6 +397,25 @@ namespace WrathEd
             }
         }
 
+        private void View_Show_Output(object sender, RoutedEventArgs args)
+        {
+            showOutput = Show_Output.IsChecked;
+            if (showOutput)
+            {
+                Output.Visibility = Visibility.Visible;
+                XML_Row.Height = new GridLength(0.8, GridUnitType.Star);
+                Output_Row.Height = new GridLength(0.2, GridUnitType.Star);
+            }
+            else
+            {
+                Output.Visibility = Visibility.Hidden;
+                XML_Row.Height = new GridLength(1.0, GridUnitType.Star);
+                Output_Row.Height = new GridLength(0.0, GridUnitType.Star);
+            }
+            // Add Reload function
+
+        }
+
         private void Help_About_Click(object sender, RoutedEventArgs args)
         {
             AboutBox aboutBox = new AboutBox();
@@ -552,6 +573,7 @@ namespace WrathEd
                                 break;
                         }
                         SetBarToValue(0.0);
+                        SetOutput("");
                     });
             }
         }
@@ -657,107 +679,108 @@ namespace WrathEd
                         StringBuilder stringBuilder = new StringBuilder();
                         if (SAGE.Compiler.AssetCompiler.Decompile(out xml, Globals.Game, versionManifest, asset, assetReferences, binData, impData, reloData, streamFiles))
                         {
-                            stringBuilder.Append("\n");
+                            // stringBuilder.Append("\n");
                             stringBuilder.Append(xml);
                         }
-#if !DEBUG
-                        else
+                        StringBuilder stringBuilderData = new StringBuilder();
+                        if (showOutput)
                         {
-#endif
-                        stringBuilder.Append(string.Format("\n\nAsset Dump:\n{0}\n{1}\n{2:X08}:{3:X08}:{4:X08}:{5:X08}\n\nAssetReferences: {6}\n",
+                            stringBuilderData.Append(string.Format("Asset Dump:\nAssetName: {0}\nSourceFile: {1}\nTypeID:InstanceID:TypeHash:InstanceHash\n{2:X08}:{3:X08}:{4:X08}:{5:X08}\n\nAssetReferences: {6}\n",
                             assetName, sourceName,
                             asset.TypeId, asset.InstanceId, asset.TypeHash, asset.InstanceHash,
                             asset.AssetReferenceCount));
-                        //                        for (int idx = 0; idx < asset.AssetReferenceCount; ++idx)
-                        //                        {
-                        //                            SAGE.Stream.AssetEntry reference = versionManifest.AssetEntries.Find(x =>
-                        //                                x.TypeId == assetReferences[idx].TypeId && x.InstanceId == assetReferences[idx].InstanceId);
-                        //                            if (reference == null)
-                        //                            {
-                        //                                stringBuilder.Append(string.Format("{0:X08}:{1:X08}\n", assetReferences[idx].TypeId, assetReferences[idx].InstanceId));
-                        //                            }
-                        //                            else
-                        //                            {
-                        //                                stringBuilder.Append(string.Format("{0:X08}:{1:X08} ({2})\n",
-                        //                                    assetReferences[idx].TypeId, assetReferences[idx].InstanceId, versionManifest.AssetNames[reference.NameOffset]));
-                        //                            }
-                        //                        }
-                        //                        stringBuilder.Append(string.Format("\nImports: {0} Offset: {1}\n", asset.ImportsDataSize, impOffset));
-                        //                        for (int idx = 0; idx < impData.Length; ++idx)
-                        //                        {
-                        //                            if (idx != 0)
-                        //                            {
-                        //                                if (idx % 0x10 == 0)
-                        //                                {
-                        //                                    stringBuilder.Append(string.Format("\n{0:X06}: ", idx));
-                        //                                }
-                        //                                else if (idx % 0x04 == 0)
-                        //                                {
-                        //                                    stringBuilder.Append(' ');
-                        //                                }
-                        //                            }
-                        //                            else
-                        //                            {
-                        //                                stringBuilder.Append(string.Format("{0:X06}: ", idx));
-                        //                            }
-                        //                            stringBuilder.Append(string.Format("{0:X02}", impData[idx]));
-                        //                        }
-                        //                        stringBuilder.Append(string.Format("\n\nRelocations: {0} Offset: {1}\n", asset.RelocationsDataSize, reloOffset));
-                        //                        for (int idx = 0; idx < reloData.Length; ++idx)
-                        //                        {
-                        //                            if (idx != 0)
-                        //                            {
-                        //                                if (idx % 0x10 == 0)
-                        //                                {
-                        //                                    stringBuilder.Append(string.Format("\n{0:X06}: ", idx));
-                        //                                }
-                        //                                else if (idx % 0x04 == 0)
-                        //                                {
-                        //                                    stringBuilder.Append(' ');
-                        //                                }
-                        //                            }
-                        //                            else
-                        //                            {
-                        //                                stringBuilder.Append(string.Format("{0:X06}: ", idx));
-                        //                            }
-                        //                            stringBuilder.Append(string.Format("{0:X02}", reloData[idx]));
-                        //                        }
-                        int assetDumpSize = binData.Length;
-                        //                        if (binData.Length > MaxAssetDumpSize)
-                        //                        {
-                        //                            stringBuilder.Append(string.Format("\n\nBinary (up to {0}): {1} Offset: {2}\n", MaxAssetDumpSize, asset.BinaryDataSize, binOffset));
-                        //                            assetDumpSize = Math.Min(binData.Length, MaxAssetDumpSize);
-                        //                        }
-                        //                        else
-                        {
-                            stringBuilder.Append(string.Format("\n\nBinary: {0} Offset: {1}\n", asset.BinaryDataSize, binOffset));
-                        }
-                        for (int idx = 0; idx < assetDumpSize; ++idx)
-                        {
-                            SetBarToValue(idx / (double)(binData.Length) * 100.0);
-                            if (idx != 0)
+                            //                        for (int idx = 0; idx < asset.AssetReferenceCount; ++idx)
+                            //                        {
+                            //                            SAGE.Stream.AssetEntry reference = versionManifest.AssetEntries.Find(x =>
+                            //                                x.TypeId == assetReferences[idx].TypeId && x.InstanceId == assetReferences[idx].InstanceId);
+                            //                            if (reference == null)
+                            //                            {
+                            //                                stringBuilder.Append(string.Format("{0:X08}:{1:X08}\n", assetReferences[idx].TypeId, assetReferences[idx].InstanceId));
+                            //                            }
+                            //                            else
+                            //                            {
+                            //                                stringBuilder.Append(string.Format("{0:X08}:{1:X08} ({2})\n",
+                            //                                    assetReferences[idx].TypeId, assetReferences[idx].InstanceId, versionManifest.AssetNames[reference.NameOffset]));
+                            //                            }
+                            //                        }
+                            //                        stringBuilder.Append(string.Format("\nImports: {0} Offset: {1}\n", asset.ImportsDataSize, impOffset));
+                            //                        for (int idx = 0; idx < impData.Length; ++idx)
+                            //                        {
+                            //                            if (idx != 0)
+                            //                            {
+                            //                                if (idx % 0x10 == 0)
+                            //                                {
+                            //                                    stringBuilder.Append(string.Format("\n{0:X06}: ", idx));
+                            //                                }
+                            //                                else if (idx % 0x04 == 0)
+                            //                                {
+                            //                                    stringBuilder.Append(' ');
+                            //                                }
+                            //                            }
+                            //                            else
+                            //                            {
+                            //                                stringBuilder.Append(string.Format("{0:X06}: ", idx));
+                            //                            }
+                            //                            stringBuilder.Append(string.Format("{0:X02}", impData[idx]));
+                            //                        }
+                            //                        stringBuilder.Append(string.Format("\n\nRelocations: {0} Offset: {1}\n", asset.RelocationsDataSize, reloOffset));
+                            //                        for (int idx = 0; idx < reloData.Length; ++idx)
+                            //                        {
+                            //                            if (idx != 0)
+                            //                            {
+                            //                                if (idx % 0x10 == 0)
+                            //                                {
+                            //                                    stringBuilder.Append(string.Format("\n{0:X06}: ", idx));
+                            //                                }
+                            //                                else if (idx % 0x04 == 0)
+                            //                                {
+                            //                                    stringBuilder.Append(' ');
+                            //                                }
+                            //                            }
+                            //                            else
+                            //                            {
+                            //                                stringBuilder.Append(string.Format("{0:X06}: ", idx));
+                            //                            }
+                            //                            stringBuilder.Append(string.Format("{0:X02}", reloData[idx]));
+                            //                        }
+                            int assetDumpSize = binData.Length;
+                            //                        if (binData.Length > MaxAssetDumpSize)
+                            //                        {
+                            //                            stringBuilder.Append(string.Format("\n\nBinary (up to {0}): {1} Offset: {2}\n", MaxAssetDumpSize, asset.BinaryDataSize, binOffset));
+                            //                            assetDumpSize = Math.Min(binData.Length, MaxAssetDumpSize);
+                            //                        }
+                            //                        else
                             {
-                                if (idx % 0x10 == 0)
-                                {
-                                    stringBuilder.Append(string.Format("\n{0:X06}: ", idx));
-                                }
-                                else if (idx % 0x04 == 0)
-                                {
-                                    stringBuilder.Append(' ');
-                                }
+                                stringBuilderData.Append(string.Format("\n\nBinary: {0} Offset: {1}\n", asset.BinaryDataSize, binOffset));
                             }
-                            else
+                            for (int idx = 0; idx < assetDumpSize; ++idx)
                             {
-                                stringBuilder.Append(string.Format("{0:X06}: ", idx));
+                                SetBarToValue(idx / (double)(binData.Length) * 100.0);
+                                if (idx != 0)
+                                {
+                                    if (idx % 0x10 == 0)
+                                    {
+                                        stringBuilderData.Append(string.Format("\n{0:X06}: ", idx));
+                                    }
+                                    else if (idx % 0x04 == 0)
+                                    {
+                                        stringBuilderData.Append(' ');
+                                    }
+                                }
+                                else
+                                {
+                                    stringBuilderData.Append(string.Format("{0:X06}: ", idx));
+                                }
+                                stringBuilderData.Append(string.Format("{0:X02}", binData[idx]));
                             }
-                            stringBuilder.Append(string.Format("{0:X02}", binData[idx]));
                         }
-#if !DEBUG
-                        }
-#endif
                         stopwatch.Stop();
-                        stringBuilder.Insert(0, string.Format("Generated in: {0}\n", stopwatch.Elapsed));
+                        if (showOutput)
+                        {
+                            stringBuilderData.Insert(0, string.Format("Generated in: {0}\n\n", stopwatch.Elapsed));
+                        }
                         SetContent(stringBuilder.ToString());
+                        SetOutput(stringBuilderData.ToString());
                         SetBarToValue(0.0);
                     });
             }
@@ -858,97 +881,98 @@ namespace WrathEd
                         StringBuilder stringBuilder = new StringBuilder();
                         if (SAGE.Compiler.AssetCompiler.Decompile(out xml, Globals.Game, streamFiles[0], asset, assetReferences, binData, impData, reloData))
                         {
-                            stringBuilder.Append("\n");
+                            // stringBuilder.Append("\n");
                             stringBuilder.Append(xml);
                         }
-#if !DEBUG
-                        else
+                        StringBuilder stringBuilderData = new StringBuilder();
+                        if (showOutput)
                         {
-#endif
-                        stringBuilder.Append(string.Format("\n\nAsset Dump:\n{0}\n{1}\n{2:X08}:{3:X08}:{4:X08}:{5:X08}\n\nAssetReferences: {6} Offset: {7}\n",
+                            stringBuilderData.Append(string.Format("Asset Dump:\nAssetName: {0}\nSourceFile: {1}\nTypeID:InstanceID:TypeHash:InstanceHash\n{2:X08}:{3:X08}:{4:X08}:{5:X08}\n\nAssetReferences: {6}\n",
                             assetName, sourceName,
                             asset.TypeId, asset.InstanceId, asset.TypeHash, asset.InstanceHash,
-                            asset.AssetReferenceCount, asset.AssetReferenceOffset));
-                        for (int idx = 0; idx < asset.AssetReferenceCount; ++idx)
-                        {
-                            stringBuilder.Append(string.Format("{0:X08}:{1:X08}\n", assetReferences[idx].TypeId, assetReferences[idx].InstanceId));
-                        }
-                        stringBuilder.Append(string.Format("\nImports: {0} Offset: {1}\n", asset.ImportsDataSize, impOffset));
-                        for (int idx = 0; idx < impData.Length; ++idx)
-                        {
-                            if (idx != 0)
+                            asset.AssetReferenceCount));
+                            for (int idx = 0; idx < asset.AssetReferenceCount; ++idx)
                             {
-                                if (idx % 0x10 == 0)
-                                {
-                                    stringBuilder.Append(string.Format("\n{0:X06}: ", idx));
-                                }
-                                else if (idx % 0x04 == 0)
-                                {
-                                    stringBuilder.Append(' ');
-                                }
+                                stringBuilderData.Append(string.Format("{0:X08}:{1:X08}\n", assetReferences[idx].TypeId, assetReferences[idx].InstanceId));
                             }
-                            else
+                            stringBuilderData.Append(string.Format("\nImports: {0} Offset: {1}\n", asset.ImportsDataSize, impOffset));
+                            for (int idx = 0; idx < impData.Length; ++idx)
                             {
-                                stringBuilder.Append(string.Format("{0:X06}: ", idx));
-                            }
-                            stringBuilder.Append(string.Format("{0:X02}", impData[idx]));
-                        }
-                        stringBuilder.Append(string.Format("\n\nRelocations: {0} Offset: {1}\n", asset.RelocationsDataSize, reloOffset));
-                        for (int idx = 0; idx < reloData.Length; ++idx)
-                        {
-                            if (idx != 0)
-                            {
-                                if (idx % 0x10 == 0)
+                                if (idx != 0)
                                 {
-                                    stringBuilder.Append(string.Format("\n{0:X06}: ", idx));
+                                    if (idx % 0x10 == 0)
+                                    {
+                                        stringBuilderData.Append(string.Format("\n{0:X06}: ", idx));
+                                    }
+                                    else if (idx % 0x04 == 0)
+                                    {
+                                        stringBuilderData.Append(' ');
+                                    }
                                 }
-                                else if (idx % 0x04 == 0)
+                                else
                                 {
-                                    stringBuilder.Append(' ');
+                                    stringBuilderData.Append(string.Format("{0:X06}: ", idx));
                                 }
+                                stringBuilderData.Append(string.Format("{0:X02}", impData[idx]));
                             }
-                            else
+                            stringBuilderData.Append(string.Format("\n\nRelocations: {0} Offset: {1}\n", asset.RelocationsDataSize, reloOffset));
+                            for (int idx = 0; idx < reloData.Length; ++idx)
                             {
-                                stringBuilder.Append(string.Format("{0:X06}: ", idx));
-                            }
-                            stringBuilder.Append(string.Format("{0:X02}", reloData[idx]));
-                        }
-                        int assetDumpSize = binData.Length;
-                        //                        if (binData.Length > MaxAssetDumpSize)
-                        //                        {
-                        //                            stringBuilder.Append(string.Format("\n\nBinary (up to {0}): {1} Offset: {2}\n", MaxAssetDumpSize, asset.BinaryDataSize, binOffset));
-                        //                            assetDumpSize = Math.Min(binData.Length, MaxAssetDumpSize);
-                        //                        }
-                        //                        else
-                        {
-                            stringBuilder.Append(string.Format("\n\nBinary: {0} Offset: {1}\n", asset.BinaryDataSize, binOffset));
-                        }
-                        for (int idx = 0; idx < assetDumpSize; ++idx)
-                        {
-                            SetBarToValue(idx / (double)(binData.Length) * 100.0);
-                            if (idx != 0)
-                            {
-                                if (idx % 0x10 == 0)
+                                if (idx != 0)
                                 {
-                                    stringBuilder.Append(string.Format("\n{0:X06}: ", idx));
+                                    if (idx % 0x10 == 0)
+                                    {
+                                        stringBuilderData.Append(string.Format("\n{0:X06}: ", idx));
+                                    }
+                                    else if (idx % 0x04 == 0)
+                                    {
+                                        stringBuilderData.Append(' ');
+                                    }
                                 }
-                                else if (idx % 0x04 == 0)
+                                else
                                 {
-                                    stringBuilder.Append(' ');
+                                    stringBuilderData.Append(string.Format("{0:X06}: ", idx));
                                 }
+                                stringBuilderData.Append(string.Format("{0:X02}", reloData[idx]));
                             }
-                            else
+                            int assetDumpSize = binData.Length;
+                            //                        if (binData.Length > MaxAssetDumpSize)
+                            //                        {
+                            //                            stringBuilder.Append(string.Format("\n\nBinary (up to {0}): {1} Offset: {2}\n", MaxAssetDumpSize, asset.BinaryDataSize, binOffset));
+                            //                            assetDumpSize = Math.Min(binData.Length, MaxAssetDumpSize);
+                            //                        }
+                            //                        else
                             {
-                                stringBuilder.Append(string.Format("{0:X06}: ", idx));
+                                stringBuilderData.Append(string.Format("\n\nBinary: {0} Offset: {1}\n", asset.BinaryDataSize, binOffset));
                             }
-                            stringBuilder.Append(string.Format("{0:X02}", binData[idx]));
+                            for (int idx = 0; idx < assetDumpSize; ++idx)
+                            {
+                                SetBarToValue(idx / (double)(binData.Length) * 100.0);
+                                if (idx != 0)
+                                {
+                                    if (idx % 0x10 == 0)
+                                    {
+                                        stringBuilderData.Append(string.Format("\n{0:X06}: ", idx));
+                                    }
+                                    else if (idx % 0x04 == 0)
+                                    {
+                                        stringBuilderData.Append(' ');
+                                    }
+                                }
+                                else
+                                {
+                                    stringBuilderData.Append(string.Format("{0:X06}: ", idx));
+                                }
+                                stringBuilderData.Append(string.Format("{0:X02}", binData[idx]));
+                            }
                         }
-#if !DEBUG
-                        }
-#endif
                         stopwatch.Stop();
-                        stringBuilder.Insert(0, string.Format("Generated in: {0}\n", stopwatch.Elapsed));
+                        if (showOutput)
+                        {
+                            stringBuilderData.Insert(0, string.Format("Generated in: {0}\n\n", stopwatch.Elapsed));
+                        }
                         SetContent(stringBuilder.ToString());
+                        SetOutput(stringBuilderData.ToString());
                         SetBarToValue(0.0);
                     });
             }
@@ -1173,6 +1197,14 @@ namespace WrathEd
             Dispatcher.Invoke((Action)(() =>
             {
                 Content.Text = value;
+            }));
+        }
+
+        public void SetOutput(string value)
+        {
+            Dispatcher.Invoke((Action)(() =>
+            {
+                Output.Text = value;
             }));
         }
 

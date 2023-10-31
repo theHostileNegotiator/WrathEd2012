@@ -27,7 +27,7 @@
             x:Name="TopMenu"
             VerticalAlignment="Top"
             Grid.Row="0"
-            Grid.ColumnSpan="3">
+            Grid.ColumnSpan="4">
             <MenuItem
                 x:Name="File"
                 Header="File">
@@ -65,6 +65,14 @@
                     Header="Export All..."
                     Click="Edit_Export_All_Click"
                     IsEnabled="false" />
+            </MenuItem>
+            <MenuItem
+                x:Name="View"
+                Header="View">
+                <MenuItem
+                    x:Name="Show_Output"
+                    Header="Show Output"
+                    Click="View_Show_Output" IsCheckable="True" />
             </MenuItem>
             <MenuItem
                 x:Name="Help"
@@ -123,14 +131,39 @@
             Width="5"
             Grid.Row="1"
             Grid.Column="1" />
-        <TextBox
-            x:Name="Content"
-            IsReadOnly="true"
-            FontFamily="Consolas"
-            HorizontalScrollBarVisibility="Visible"
-            VerticalScrollBarVisibility="Visible"
+        <Grid
             Grid.Row="1"
-            Grid.Column="2" />
+            Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition x:Name="XML_Row"
+                    Height="1.0*" />
+                <RowDefinition x:Name="Output_Row"
+                    Height="0.0*" />
+            </Grid.RowDefinitions>
+            <TextBox
+                x:Name="Content"
+                IsReadOnly="true"
+                FontFamily="Consolas"
+                HorizontalScrollBarVisibility="Visible"
+                VerticalScrollBarVisibility="Visible"
+                Grid.Row="0"
+                Grid.Column="0" />
+            <GridSplitter
+                Height="5"
+                Grid.Row="0"
+                Grid.Column="0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Bottom"
+                ResizeDirection="Rows" />
+            <TextBox
+                x:Name="Output"
+                IsReadOnly="true"
+                FontFamily="Consolas"
+                HorizontalScrollBarVisibility="Visible"
+                VerticalScrollBarVisibility="Visible"
+                Grid.Row="1"
+                Grid.Column="0" Visibility="Hidden" />
+        </Grid>
         <StatusBar
             x:Name="Status"
             Background="#000"
