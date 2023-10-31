@@ -1,6 +1,7 @@
 ﻿using Files;
 using Microsoft.Win32;
 using SAGE;
+using SAGE.Compiler;
 using SAGE.WrathEdXML.GameDefinition;
 using System;
 using System.Collections.Generic;
@@ -413,7 +414,12 @@ namespace WrathEd
                 Output_Row.Height = new GridLength(0.0, GridUnitType.Star);
             }
             // Add Reload function
+        }
 
+        private void View_Show_ShowHiddenDefaults(object sender, RoutedEventArgs args)
+        {
+            ShowDefault.IsChecked = Show_ShowHiddenDefaults.IsChecked;
+            // Add Reload function
         }
 
         private void Help_About_Click(object sender, RoutedEventArgs args)

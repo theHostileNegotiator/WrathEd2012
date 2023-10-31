@@ -41,6 +41,7 @@
 		<xs:attribute name="IsAttribute" type="xs:boolean" default="false" />
 		<xs:attribute name="IsRequired" type="xs:boolean" default="false" />
 		<xs:attribute name="IsVoid" type="xs:boolean" default="false" />
+		<xs:attribute name="HideIfDefault" type="xs:boolean" default="true" />
 	</xs:complexType>
 
 	<xs:complexType name="EntryPoidType">

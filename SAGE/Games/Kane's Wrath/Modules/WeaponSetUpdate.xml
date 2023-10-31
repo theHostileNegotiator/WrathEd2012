@@ -6,7 +6,8 @@
 		<Entry
 			id="Ordering"
 			AssetType="WeaponSlotType"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 		<EntryReference
 			id="Template"
 			AssetType="WeaponTemplate"

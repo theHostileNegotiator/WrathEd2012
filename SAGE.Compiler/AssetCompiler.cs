@@ -4,11 +4,16 @@ using SAGE.Xml;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Xml;
 
 namespace SAGE.Compiler
 {
+    public class ShowDefault
+    {
+        public static bool IsChecked { get; set; }
+    }
     public static class AssetCompiler
     {
         public static Dictionary<string, Asset> TempAssets;
@@ -116,7 +121,21 @@ namespace SAGE.Compiler
                         }
                     }
                     binPosition += 4;
-                    entryNode.Attributes.Append(attribute);
+                    EntryReferenceType entry = baseEntry as EntryReferenceType;
+                    if (entry.Default == null)
+                    {
+                        if (attribute.Value != "" || !entry.HideIfDefault || entry.IsRequired || ShowDefault.IsChecked)
+                        {
+                            entryNode.Attributes.Append(attribute);
+                        }
+                    }
+                    else
+                    {
+                        if (attribute.Value != entry.Default.ToString() || !entry.HideIfDefault || entry.IsRequired || ShowDefault.IsChecked)
+                        {
+                            entryNode.Attributes.Append(attribute);
+                        }
+                    }
                 }
                 else if (entryType == typeof(EntryWeakReferenceType))
                 {
@@ -163,12 +182,28 @@ namespace SAGE.Compiler
                             attribute.Value += string.Format("Asset not found in stream: [{0:X08}]", reference);
                         }
                     }
-                    entryNode.Attributes.Append(attribute);
+                    EntryWeakReferenceType entry = baseEntry as EntryWeakReferenceType;
+                    if (entry.Default == null)
+                    {
+                        if (attribute.Value != "" || !entry.HideIfDefault || entry.IsRequired || ShowDefault.IsChecked)
+                        {
+                            entryNode.Attributes.Append(attribute);
+                        }
+                    }
+                    else
+                    {
+                        if (attribute.Value != entry.Default.ToString() || !entry.HideIfDefault || entry.IsRequired || ShowDefault.IsChecked)
+                        {
+                            entryNode.Attributes.Append(attribute);
+                        }
+                    }
                 }
                 else if (entryType == typeof(EntryType))
                 {
                     string defaultValue = string.Empty;
                     string typeDefaultValue = string.Empty;
+                    bool float_in_tolerance = false;
+                    bool def_flags_match = false;
                     EntryType entry = baseEntry as EntryType;
                     foreach (BaseAssetType baseAssetType in game.Assets.AssetTypes)
                     {
@@ -178,6 +213,16 @@ namespace SAGE.Compiler
                             if (assetTypeType == typeof(EnumAssetType))
                             {
                                 EnumAssetType asset = baseAssetType as EnumAssetType;
+                                if (entry.Default != null)
+                                {
+                                    uint defaultenum = asset.GetValue(entry.Default);
+                                    defaultValue = asset.GetValue(defaultenum);
+                                    // defaultValue = entry.Default;
+                                }
+                                else
+                                {
+                                    defaultValue = asset.GetValue(0);
+                                }
                                 attribute.Value = asset.GetValue(FileHelper.GetUInt(binPosition, bin));
                                 binPosition += 4;
                             }
@@ -227,6 +272,35 @@ namespace SAGE.Compiler
                                         flagsStringBuilder.Remove(flagsStringBuilder.Length - 1, 1);
                                     }
                                     attribute.Value += flagsStringBuilder.ToString();
+                                    // Compare Flags
+                                    {
+                                        if (entry.Default != null)
+                                        {
+                                            string[] defaultflaglist = entry.Default.Split(' ');
+                                            string[] flaglist = attribute.Value.Split(' ');
+
+                                            def_flags_match = true;
+                                            if (flaglist.Length == defaultflaglist.Length)
+                                            {
+                                                foreach (var flagenum in flaglist)
+                                                {
+                                                    if (!defaultflaglist.Contains(flagenum))
+                                                    {
+                                                        def_flags_match = false;
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                def_flags_match = false;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            defaultValue = "";
+                                        }
+                                    }
                                 }
                             }
                             break;
@@ -238,6 +312,10 @@ namespace SAGE.Compiler
                             if (entry.Default != null)
                             {
                                 defaultValue = entry.Default;
+                            }
+                            else
+                            {
+                                defaultValue = "";
                             }
                             int stringLength = FileHelper.GetInt(binPosition, bin);
                             binPosition += 4;
@@ -257,6 +335,10 @@ namespace SAGE.Compiler
                             {
                                 defaultValue = entry.Default;
                             }
+                            else
+                            {
+                                defaultValue = "0";
+                            }
                             typeDefaultValue = "0";
                             attribute.Value += FileHelper.GetByte(binPosition, bin).ToString();
                             ++binPosition;
@@ -265,6 +347,14 @@ namespace SAGE.Compiler
                             if (entry.Default != null)
                             {
                                 defaultValue = new SAGE.Types.Angle(entry.Default).Value.ToString() + 'd';
+                            }
+                            else
+                            {
+                                defaultValue = "0d";
+                            }
+                            {
+                                float defaultFloat = float.Parse(defaultValue.Substring(0, defaultValue.Length - 1));
+                                float_in_tolerance = Math.Abs(defaultFloat - FileHelper.GetFloat(binPosition, bin)) < 0.000001;
                             }
                             typeDefaultValue = SAGE.Types.Angle.DefaultValue;
                             attribute.Value += (FileHelper.GetFloat(binPosition, bin) * Types.Constants.DEGREES_PER_RAD).ToString() + 'd';
@@ -275,6 +365,14 @@ namespace SAGE.Compiler
                             {
                                 defaultValue = new SAGE.Types.Percentage(entry.Default).Value.ToString() + '%';
                             }
+                            else
+                            {
+                                defaultValue = "0%";
+                            }
+                            {
+                                float defaultFloat = float.Parse(defaultValue.Substring(0, defaultValue.Length - 1));
+                                float_in_tolerance = Math.Abs(defaultFloat - FileHelper.GetFloat(binPosition, bin)) < 0.000001;
+                            }
                             typeDefaultValue = SAGE.Types.Percentage.DefaultValue;
                             attribute.Value += (FileHelper.GetFloat(binPosition, bin) * 100).ToString() + '%';
                             binPosition += 4;
@@ -283,15 +381,24 @@ namespace SAGE.Compiler
                             if (entry.Default != null)
                             {
                                 defaultValue = new SAGE.Types.SageBool(entry.Default).Value.ToString();
+                                defaultValue = defaultValue.ToLowerInvariant();
+                            }
+                            else
+                            {
+                                defaultValue = "false";
                             }
                             typeDefaultValue = SAGE.Types.SageBool.DefaultValue;
-                            attribute.Value += FileHelper.GetBool(binPosition, bin).ToString();
+                            attribute.Value += (FileHelper.GetBool(binPosition, bin).ToString()).ToLowerInvariant();
                             ++binPosition;
                             break;
                         case SageInt:
                             if (entry.Default != null)
                             {
                                 defaultValue = entry.Default;
+                            }
+                            else
+                            {
+                                defaultValue = "0";
                             }
                             typeDefaultValue = SAGE.Types.SageInt.DefaultValue;
                             attribute.Value += FileHelper.GetInt(binPosition, bin).ToString();
@@ -302,6 +409,14 @@ namespace SAGE.Compiler
                             {
                                 defaultValue = new SAGE.Types.SageReal(entry.Default).Value.ToString();
                             }
+                            else
+                            {
+                                defaultValue = "0";
+                            }
+                            {
+                                float defaultFloat = float.Parse(defaultValue);
+                                float_in_tolerance = Math.Abs(defaultFloat - FileHelper.GetFloat(binPosition, bin)) < 0.000001;
+                            }
                             typeDefaultValue = SAGE.Types.SageReal.DefaultValue;
                             attribute.Value += FileHelper.GetFloat(binPosition, bin).ToString();
                             binPosition += 4;
@@ -310,6 +425,10 @@ namespace SAGE.Compiler
                             if (entry.Default != null)
                             {
                                 defaultValue = entry.Default;
+                            }
+                            else
+                            {
+                                defaultValue = "0";
                             }
                             typeDefaultValue = SAGE.Types.SageUnsignedInt.DefaultValue;
                             attribute.Value += FileHelper.GetUInt(binPosition, bin).ToString();
@@ -320,6 +439,10 @@ namespace SAGE.Compiler
                             {
                                 defaultValue = entry.Default;
                             }
+                            else
+                            {
+                                defaultValue = "0";
+                            }
                             typeDefaultValue = SAGE.Types.SageUnsignedShort.DefaultValue;
                             attribute.Value += FileHelper.GetUShort(binPosition, bin).ToString();
                             binPosition += 2;
@@ -328,6 +451,14 @@ namespace SAGE.Compiler
                             if (entry.Default != null)
                             {
                                 defaultValue = new SAGE.Types.Time(entry.Default).Value.ToString() + 's';
+                            }
+                            else
+                            {
+                                defaultValue = "0s";
+                            }
+                            {
+                                float defaultFloat = float.Parse(defaultValue.Substring(0, defaultValue.Length - 1));
+                                float_in_tolerance = Math.Abs(defaultFloat - FileHelper.GetFloat(binPosition, bin)) < 0.000001;
                             }
                             typeDefaultValue = SAGE.Types.Time.DefaultValue;
                             attribute.Value += FileHelper.GetFloat(binPosition, bin).ToString() + "s";
@@ -338,6 +469,14 @@ namespace SAGE.Compiler
                             {
                                 defaultValue = new SAGE.Types.Velocity(entry.Default).Value.ToString();
                             }
+                            else
+                            {
+                                defaultValue = "0";
+                            }
+                            {
+                                float defaultFloat = float.Parse(defaultValue);
+                                float_in_tolerance = Math.Abs(defaultFloat - FileHelper.GetFloat(binPosition, bin) * Types.Constants.LOGICFRAMES_PER_SECONDS_REAL) < 0.000001;
+                            }
                             typeDefaultValue = SAGE.Types.Velocity.DefaultValue;
                             attribute.Value += (FileHelper.GetFloat(binPosition, bin) * Types.Constants.LOGICFRAMES_PER_SECONDS_REAL).ToString();
                             binPosition += 4;
@@ -347,12 +486,28 @@ namespace SAGE.Compiler
                             {
                                 defaultValue = new SAGE.Types.DurationUnsignedInt(entry.Default).Value.ToString();
                             }
+                            else
+                            {
+                                defaultValue = "0";
+                            }
                             typeDefaultValue = SAGE.Types.DurationUnsignedInt.DefaultValue;
                             attribute.Value += (FileHelper.GetUInt(binPosition, bin) * Types.Constants.MSEC_PER_LOGICFRAMES_REAL).ToString();
                             binPosition += 4;
                             break;
                     }
-                    entryNode.Attributes.Append(attribute);
+                    if (entry.HideIfDefault && !entry.IsRequired && !ShowDefault.IsChecked)
+                    {
+                        // Hide if Default Value matches output value
+                        if (!(attribute.Value == defaultValue || float_in_tolerance || def_flags_match))
+                        {
+                            entryNode.Attributes.Append(attribute);
+                        }
+                    }
+                    else
+                    {
+                        entryNode.Attributes.Append(attribute);
+                    }
+
                 }
                 else if (entryType == typeof(EntryRelocationType))
                 {
@@ -713,7 +868,41 @@ namespace SAGE.Compiler
                         if (baseAssetType.id == entry.AssetType)
                         {
                             Type assetTypeType = baseAssetType.GetType();
-                            if (assetTypeType == typeof(AssetType))
+                            if (assetTypeType == typeof(EnumAssetType))
+                            {
+                                EnumAssetType asset = baseAssetType as EnumAssetType;
+                                element.InnerText += asset.GetValue(FileHelper.GetUInt(binPosition, bin));
+                                binPosition += 4;
+                            }
+							else if (assetTypeType == typeof(FlagsAssetType))
+                            {
+                                FlagsAssetType asset = baseAssetType as FlagsAssetType;
+                                int numSpans = asset.NumSpans(game);
+                                uint[] flags = new uint[numSpans];
+                                for (int idx = 0; idx < numSpans; ++idx)
+                                {
+                                    flags[idx] = FileHelper.GetUInt(binPosition, bin);
+                                    binPosition += 4;
+                                }
+                                StringBuilder flagsStringBuilder = new StringBuilder();
+                                for (int idx = 0; idx < numSpans; ++idx)
+                                {
+                                    for (int idy = 0; idy < FlagsAssetType.BitsInSpan; ++idy)
+                                    {
+                                        if ((flags[idx] & (1 << idy)) != 0)
+                                        {
+                                            flagsStringBuilder.Append(asset.GetValue(idx, idy, game));
+                                            flagsStringBuilder.Append(" ");
+                                        }
+                                    }
+                                }
+                                if (flagsStringBuilder.Length != 0)
+                                {
+                                    flagsStringBuilder.Remove(flagsStringBuilder.Length - 1, 1);
+                                }
+                                element.InnerText += flagsStringBuilder.ToString();
+                            }
+                            else if (assetTypeType == typeof(AssetType))
                             {
                                 AssetType assetType = baseAssetType as AssetType;
                                 foreach (BaseEntryType assetEntry in assetType.Entries)

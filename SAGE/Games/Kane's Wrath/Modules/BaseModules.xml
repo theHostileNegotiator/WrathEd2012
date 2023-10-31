@@ -215,7 +215,8 @@
 		<EntryReference
 			id="Name"
 			AssetType="BaseRenderAssetType"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 		<Entry
 			id="ExtraMesh"
 			AssetType="SageBool"

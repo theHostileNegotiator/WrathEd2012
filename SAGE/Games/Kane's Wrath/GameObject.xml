@@ -51,15 +51,18 @@
 		<Entry
 			id="Speed"
 			AssetType="SageReal"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 		<Entry
 			id="Condition"
 			AssetType="LocomotorSetType"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 		<EntryReference
 			id="Locomotor"
 			AssetType="LocomotorTemplate"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 	</Asset>
 
 	<Asset
@@ -1530,7 +1533,8 @@
 		<Entry
 			id="KindOf"
 			AssetType="KindOfBitFlags"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 		<EntryList
 			id="Browser"
 			AssetType="String"

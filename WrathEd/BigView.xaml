@@ -73,6 +73,10 @@
                     x:Name="Show_Output"
                     Header="Show Output"
                     Click="View_Show_Output" IsCheckable="True" />
+                <MenuItem
+                    x:Name="Show_ShowHiddenDefaults"
+                    Header="Show Hidden Defaults"
+                    Click="View_Show_ShowHiddenDefaults" IsCheckable="True" />
             </MenuItem>
             <MenuItem
                 x:Name="Help"

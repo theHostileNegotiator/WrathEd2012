@@ -37,7 +37,8 @@
 			id="Rule"
 			AssetType="ObjectFilterRule"
 			IsAttribute="true"
-			Default="NONE" />
+			Default="NONE"
+			HideIfDefault="false" />
 		<Entry
 			id="Relationship"
 			AssetType="ObjectFilterRelationshipBitMask"

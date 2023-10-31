@@ -21,12 +21,14 @@
 			id="MinSeconds"
 			AssetType="Time"
 			IsAttribute="true"
-			Default="0s" />
+			Default="0s"
+			HideIfDefault="false" />
 		<Entry
 			id="MaxSeconds"
 			AssetType="Time"
 			IsAttribute="true"
-			Default="0s" />
+			Default="0s"
+			HideIfDefault="false" />
 	</Asset>
 
 	<Asset
@@ -666,12 +668,14 @@
 			id="Lifetime"
 			AssetType="Time"
 			IsAttribute="true"
-			Default="1s" />
+			Default="1s"
+			HideIfDefault="false" />
 		<Entry
 			id="LaserId"
 			AssetType="SageInt"
 			IsAttribute="true"
-			Default="0" />
+			Default="0"
+			HideIfDefault="false" />
 		<EntryReference
 			id="HitGroundFX"
 			AssetType="FXList"
@@ -1262,7 +1266,8 @@
 			id="ClipSize"
 			AssetType="SageInt"
 			IsAttribute="true"
-			Default="0" />
+			Default="0"
+			HideIfDefault="false" />
 		<Entry
 			id="ContinuousFireOne"
 			AssetType="SageInt"
@@ -1363,7 +1368,8 @@
 			id="RadiusDamageAffects"
 			AssetType="WeaponAffectsBitFlags"
 			IsAttribute="true"
-			Default="ALLIES ENEMIES NEUTRALS" />
+			Default="ALLIES ENEMIES NEUTRALS"
+			HideIfDefault="false" />
 		<Entry
 			id="FXTrigger"
 			AssetType="String"

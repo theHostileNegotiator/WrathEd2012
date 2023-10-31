@@ -30,7 +30,8 @@
 		<EntryReference
 			id="AnimationName"
 			AssetType="W3DAnimation"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 		<Entry
 			id="AnimationMode"
 			AssetType="String"

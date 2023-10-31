@@ -57,11 +57,15 @@ namespace SAGE.WrathEdXML.AssetDefinition
 		[XmlAttribute()]
 		public bool IsVoid { get; set; }
 
+		[XmlAttribute()]
+		public bool HideIfDefault { get; set; }
+
 		public BaseEntryType()
 		{
 			IsAttribute = false;
 			IsRequired = false;
 			IsVoid = false;
+			HideIfDefault = true;
 		}
 	}
 
