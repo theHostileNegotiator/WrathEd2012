@@ -31,6 +31,9 @@ namespace WrathEd
         private string singleManifest;
 
         public bool showOutput;
+        public bool LoadedGame = false;
+        public bool LoadedStream = false;
+        public bool AssetIsSelected = false;
 
         public BigView()
         {
@@ -406,20 +409,28 @@ namespace WrathEd
                 Output.Visibility = Visibility.Visible;
                 XML_Row.Height = new GridLength(0.8, GridUnitType.Star);
                 Output_Row.Height = new GridLength(0.2, GridUnitType.Star);
+                if (AssetIsSelected)
+                {
+                    DecompiletoXML();
+                }
             }
             else
             {
+                SetOutput("");
                 Output.Visibility = Visibility.Hidden;
                 XML_Row.Height = new GridLength(1.0, GridUnitType.Star);
                 Output_Row.Height = new GridLength(0.0, GridUnitType.Star);
             }
-            // Add Reload function
         }
 
         private void View_Show_ShowHiddenDefaults(object sender, RoutedEventArgs args)
         {
             ShowDefault.IsChecked = Show_ShowHiddenDefaults.IsChecked;
-            // Add Reload function
+
+            if (AssetIsSelected)
+            {
+                DecompiletoXML();
+            }
         }
 
         private void Help_About_Click(object sender, RoutedEventArgs args)
@@ -463,6 +474,9 @@ namespace WrathEd
                         AddStreamItemsToStream(assets);
                         SetContentToStreamManifestInfo();
                         SetBarToValue(0.0);
+
+                        SetContent("");
+                        SetOutput("");
                     });
             }
         }
@@ -579,28 +593,83 @@ namespace WrathEd
                                 break;
                         }
                         SetBarToValue(0.0);
+                        SetContent("");
                         SetOutput("");
                     });
             }
         }
 
-        private void StreamStream_SelectionChanged(object sender, SelectionChangedEventArgs args)
+        private void Stream_SelectionChanged(object sender, SelectionChangedEventArgs args)
         {
             if (args.AddedItems.Count != 0)
             {
-                ThreadPool.QueueUserWorkItem(
-                    (object empty) =>
+                DecompiletoXML();
+                AssetIsSelected = true;
+            }
+        }
+
+        private void Search_Click(object sender, RoutedEventArgs args)
+        {
+            string filter = SearchAssetNameBox.Text.ToLowerInvariant();
+            if (filter.Length > 0)
+            {
+                if (AssetTypeFilter.SelectedIndex > 0)
+                {
+                    Stream.Items.Filter = (obj) =>
                     {
-                        System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
-                        stopwatch.Start();
-                        SetBarToNoValue();
-                        string assetName = GetSelectedStreamItem();
-                        string[] splitAssetName = assetName.Split(':');
-                        uint[] assetHashes = new uint[] { StringHasher.Hash(splitAssetName[0]), StringHasher.Hash(splitAssetName[1].ToLowerInvariant()) };
-                        SAGE.Stream.AssetEntry asset = null;
+                        return (obj as string).ToLowerInvariant().Contains(filter) &&
+                            (obj as string).StartsWith(AssetTypeFilter.SelectedItem as string);
+                    };
+                }
+                else
+                {
+                    Stream.Items.Filter = (obj) =>
+                    {
+                        return (obj as string).ToLowerInvariant().Contains(filter);
+                    };
+                }
+            }
+            else
+            {
+                AssetTypeFilter_SelectionChanged(null, null);
+            }
+        }
+
+        private void AssetTypeFilter_SelectionChanged(object sender, SelectionChangedEventArgs args)
+        {
+            if (AssetTypeFilter.SelectedIndex > 0)
+            {
+                Stream.Items.Filter = (obj) =>
+                {
+                    return (obj as string).StartsWith((AssetTypeFilter.SelectedItem as string) + ':');
+                };
+            }
+            else
+            {
+                Stream.Items.Filter = null;
+            }
+        }
+        public void DecompiletoXML()
+        {
+            ThreadPool.QueueUserWorkItem(
+                (object empty) =>
+                {
+                    System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
+                    stopwatch.Start();
+                    SetBarToNoValue();
+                    string assetName = GetSelectedStreamItem();
+                    string[] splitAssetName = assetName.Split(':');
+                    uint[] assetHashes = new uint[] { StringHasher.Hash(splitAssetName[0]), StringHasher.Hash(splitAssetName[1].ToLowerInvariant()) };
+                    SAGE.Stream.AssetEntry asset = null;
+
+                    SAGE.Stream.File versionManifest = null;
+                    SAGE.Big.PackedFile versionBig = null;
+                    string sourceName = null;
+                    if (LoadedGame)
+                    {
                         bool isFound = false;
-                        SAGE.Stream.File versionManifest = new SAGE.Stream.File(5);
-                        SAGE.Big.PackedFile versionBig = new SAGE.Big.PackedFile();
+                        versionManifest = new SAGE.Stream.File(5);
+                        versionBig = new SAGE.Big.PackedFile();
                         foreach (SAGE.Stream.AssetEntry entry in gameStream.StreamManifest.AssetEntries)
                         {
                             if (entry.TypeId == assetHashes[0] && entry.InstanceId == assetHashes[1])
@@ -639,26 +708,60 @@ namespace WrathEd
                                 }
                             }
                         }
-                        string sourceName = versionManifest.SourceFiles[asset.SourceFileNameOffset];
-                        List<SAGE.Stream.AssetReference> assetReferences = new List<SAGE.Stream.AssetReference>();
+                        sourceName = versionManifest.SourceFiles[asset.SourceFileNameOffset];
+                    }
+                    else if (LoadedStream)
+                    {
+                        foreach (SAGE.Stream.AssetEntry entry in streamFiles[0].AssetEntries)
+                        {
+                            if (entry.TypeId == assetHashes[0] && entry.InstanceId == assetHashes[1])
+                            {
+                                asset = entry;
+                                break;
+                            }
+                        }
+                        sourceName = streamFiles[0].SourceFiles[asset.SourceFileNameOffset];
+                    }
+                    List<SAGE.Stream.AssetReference> assetReferences = new List<SAGE.Stream.AssetReference>();
+                    string fileName = null;
+                    if (LoadedGame)
+                    {
                         for (int idx = 0; idx < asset.AssetReferenceCount; ++idx)
                         {
                             assetReferences.Add(versionManifest.AssetReferences[(int)(asset.AssetReferenceOffset) / 8 + idx]);
                         }
-                        string fileName = versionBig.Name;
-                        string fileNameWithoutExtension = fileName.Substring(0, fileName.LastIndexOf('.'));
-                        string fileNameBin = fileNameWithoutExtension + ".bin";
-                        string fileNameImp = fileNameWithoutExtension + ".imp";
-                        string fileNameRelo = fileNameWithoutExtension + ".relo";
-                        uint binOffset = 0x04;
-                        uint impOffset = 0x04;
-                        uint reloOffset = 0x04;
-                        if (streamFiles[0].Header.Version == 7)
+                        fileName = versionBig.Name;
+                    }
+                    else if (LoadedStream)
+                    {
+                        for (int idx = 0; idx < asset.AssetReferenceCount; ++idx)
                         {
-                            binOffset = 0x08;
-                            impOffset = 0x08;
-                            reloOffset = 0x08;
+                            assetReferences.Add(streamFiles[0].AssetReferences[(int)(asset.AssetReferenceOffset) / 8 + idx]);
                         }
+                        if (singleManifest is null)
+                        {
+                            fileName = bigFiles[0].Files[GetSelectedBigIndex()].Name;
+                        }
+                        else
+                        {
+                            fileName = singleManifest;
+                        }
+                    }
+                    string fileNameWithoutExtension = fileName.Substring(0, fileName.LastIndexOf('.'));
+                    string fileNameBin = fileNameWithoutExtension + ".bin";
+                    string fileNameImp = fileNameWithoutExtension + ".imp";
+                    string fileNameRelo = fileNameWithoutExtension + ".relo";
+                    uint binOffset = 0x04;
+                    uint impOffset = 0x04;
+                    uint reloOffset = 0x04;
+                    if (streamFiles[0].Header.Version == 7)
+                    {
+                        binOffset = 0x08;
+                        impOffset = 0x08;
+                        reloOffset = 0x08;
+                    }
+                    if (LoadedGame)
+                    {
                         foreach (SAGE.Stream.AssetEntry assetEntry in versionManifest.AssetEntries)
                         {
                             if (assetEntry == asset)
@@ -669,9 +772,27 @@ namespace WrathEd
                             impOffset += assetEntry.ImportsDataSize;
                             reloOffset += assetEntry.RelocationsDataSize;
                         }
-                        byte[] binData = null;
-                        byte[] impData = null;
-                        byte[] reloData = null;
+                    }
+                    else if (LoadedStream)
+                    {
+                        foreach (SAGE.Stream.AssetEntry assetEntry in streamFiles[0].AssetEntries)
+                        {
+                            if (assetEntry == asset)
+                            {
+                                break;
+                            }
+                            binOffset += assetEntry.BinaryDataSize;
+                            impOffset += assetEntry.ImportsDataSize;
+                            reloOffset += assetEntry.RelocationsDataSize;
+                        }
+                    }
+                    byte[] binData = null;
+                    byte[] impData = null;
+                    byte[] reloData = null;
+                    StringBuilder stringBuilder = null;
+                    StringBuilder stringBuilderData = null;
+                    if (LoadedGame)
+                    {
                         foreach (SAGE.Big.File file in bigFiles)
                         {
                             if (file.Contains(versionBig))
@@ -682,80 +803,20 @@ namespace WrathEd
                             }
                         }
                         string xml;
-                        StringBuilder stringBuilder = new StringBuilder();
+                        stringBuilder = new StringBuilder();
                         if (SAGE.Compiler.AssetCompiler.Decompile(out xml, Globals.Game, versionManifest, asset, assetReferences, binData, impData, reloData, streamFiles))
                         {
                             // stringBuilder.Append("\n");
                             stringBuilder.Append(xml);
                         }
-                        StringBuilder stringBuilderData = new StringBuilder();
+                        stringBuilderData = new StringBuilder();
                         if (showOutput)
                         {
                             stringBuilderData.Append(string.Format("Asset Dump:\nAssetName: {0}\nSourceFile: {1}\nTypeID:InstanceID:TypeHash:InstanceHash\n{2:X08}:{3:X08}:{4:X08}:{5:X08}\n\nAssetReferences: {6}\n",
                             assetName, sourceName,
                             asset.TypeId, asset.InstanceId, asset.TypeHash, asset.InstanceHash,
                             asset.AssetReferenceCount));
-                            //                        for (int idx = 0; idx < asset.AssetReferenceCount; ++idx)
-                            //                        {
-                            //                            SAGE.Stream.AssetEntry reference = versionManifest.AssetEntries.Find(x =>
-                            //                                x.TypeId == assetReferences[idx].TypeId && x.InstanceId == assetReferences[idx].InstanceId);
-                            //                            if (reference == null)
-                            //                            {
-                            //                                stringBuilder.Append(string.Format("{0:X08}:{1:X08}\n", assetReferences[idx].TypeId, assetReferences[idx].InstanceId));
-                            //                            }
-                            //                            else
-                            //                            {
-                            //                                stringBuilder.Append(string.Format("{0:X08}:{1:X08} ({2})\n",
-                            //                                    assetReferences[idx].TypeId, assetReferences[idx].InstanceId, versionManifest.AssetNames[reference.NameOffset]));
-                            //                            }
-                            //                        }
-                            //                        stringBuilder.Append(string.Format("\nImports: {0} Offset: {1}\n", asset.ImportsDataSize, impOffset));
-                            //                        for (int idx = 0; idx < impData.Length; ++idx)
-                            //                        {
-                            //                            if (idx != 0)
-                            //                            {
-                            //                                if (idx % 0x10 == 0)
-                            //                                {
-                            //                                    stringBuilder.Append(string.Format("\n{0:X06}: ", idx));
-                            //                                }
-                            //                                else if (idx % 0x04 == 0)
-                            //                                {
-                            //                                    stringBuilder.Append(' ');
-                            //                                }
-                            //                            }
-                            //                            else
-                            //                            {
-                            //                                stringBuilder.Append(string.Format("{0:X06}: ", idx));
-                            //                            }
-                            //                            stringBuilder.Append(string.Format("{0:X02}", impData[idx]));
-                            //                        }
-                            //                        stringBuilder.Append(string.Format("\n\nRelocations: {0} Offset: {1}\n", asset.RelocationsDataSize, reloOffset));
-                            //                        for (int idx = 0; idx < reloData.Length; ++idx)
-                            //                        {
-                            //                            if (idx != 0)
-                            //                            {
-                            //                                if (idx % 0x10 == 0)
-                            //                                {
-                            //                                    stringBuilder.Append(string.Format("\n{0:X06}: ", idx));
-                            //                                }
-                            //                                else if (idx % 0x04 == 0)
-                            //                                {
-                            //                                    stringBuilder.Append(' ');
-                            //                                }
-                            //                            }
-                            //                            else
-                            //                            {
-                            //                                stringBuilder.Append(string.Format("{0:X06}: ", idx));
-                            //                            }
-                            //                            stringBuilder.Append(string.Format("{0:X02}", reloData[idx]));
-                            //                        }
                             int assetDumpSize = binData.Length;
-                            //                        if (binData.Length > MaxAssetDumpSize)
-                            //                        {
-                            //                            stringBuilder.Append(string.Format("\n\nBinary (up to {0}): {1} Offset: {2}\n", MaxAssetDumpSize, asset.BinaryDataSize, binOffset));
-                            //                            assetDumpSize = Math.Min(binData.Length, MaxAssetDumpSize);
-                            //                        }
-                            //                        else
                             {
                                 stringBuilderData.Append(string.Format("\n\nBinary: {0} Offset: {1}\n", asset.BinaryDataSize, binOffset));
                             }
@@ -780,81 +841,9 @@ namespace WrathEd
                                 stringBuilderData.Append(string.Format("{0:X02}", binData[idx]));
                             }
                         }
-                        stopwatch.Stop();
-                        if (showOutput)
-                        {
-                            stringBuilderData.Insert(0, string.Format("Generated in: {0}\n\n", stopwatch.Elapsed));
-                        }
-                        SetContent(stringBuilder.ToString());
-                        SetOutput(stringBuilderData.ToString());
-                        SetBarToValue(0.0);
-                    });
-            }
-        }
-
-        private void Stream_SelectionChanged(object sender, SelectionChangedEventArgs args)
-        {
-            if (args.AddedItems.Count != 0)
-            {
-                ThreadPool.QueueUserWorkItem(
-                    (object empty) =>
+                    }
+                    else if (LoadedStream)
                     {
-                        System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
-                        stopwatch.Start();
-                        SetBarToNoValue();
-                        string assetName = GetSelectedStreamItem();
-                        string[] splitAssetName = assetName.Split(':');
-                        uint[] assetHashes = new uint[] { StringHasher.Hash(splitAssetName[0]), StringHasher.Hash(splitAssetName[1].ToLowerInvariant()) };
-                        SAGE.Stream.AssetEntry asset = null;
-                        foreach (SAGE.Stream.AssetEntry entry in streamFiles[0].AssetEntries)
-                        {
-                            if (entry.TypeId == assetHashes[0] && entry.InstanceId == assetHashes[1])
-                            {
-                                asset = entry;
-                                break;
-                            }
-                        }
-                        string sourceName = streamFiles[0].SourceFiles[asset.SourceFileNameOffset];
-                        List<SAGE.Stream.AssetReference> assetReferences = new List<SAGE.Stream.AssetReference>();
-                        for (int idx = 0; idx < asset.AssetReferenceCount; ++idx)
-                        {
-                            assetReferences.Add(streamFiles[0].AssetReferences[(int)(asset.AssetReferenceOffset) / 8 + idx]);
-                        }
-                        string fileName;
-                        if (singleManifest is null)
-                        {
-                            fileName = bigFiles[0].Files[GetSelectedBigIndex()].Name;
-                        }
-                        else
-                        {
-                            fileName = singleManifest;
-                        }
-                        string fileNameWithoutExtension = fileName.Substring(0, fileName.LastIndexOf('.'));
-                        string fileNameBin = fileNameWithoutExtension + ".bin";
-                        string fileNameImp = fileNameWithoutExtension + ".imp";
-                        string fileNameRelo = fileNameWithoutExtension + ".relo";
-                        uint binOffset = 0x04;
-                        uint impOffset = 0x04;
-                        uint reloOffset = 0x04;
-                        if (streamFiles[0].Header.Version == 7)
-                        {
-                            binOffset = 0x08;
-                            impOffset = 0x08;
-                            reloOffset = 0x08;
-                        }
-                        foreach (SAGE.Stream.AssetEntry assetEntry in streamFiles[0].AssetEntries)
-                        {
-                            if (assetEntry == asset)
-                            {
-                                break;
-                            }
-                            binOffset += assetEntry.BinaryDataSize;
-                            impOffset += assetEntry.ImportsDataSize;
-                            reloOffset += assetEntry.RelocationsDataSize;
-                        }
-                        byte[] binData = null;
-                        byte[] impData = null;
-                        byte[] reloData = null;
                         if (singleManifest is null)
                         {
                             binData = bigFiles[0].GetFile(fileNameBin, asset.BinaryDataSize, binOffset);
@@ -884,13 +873,13 @@ namespace WrathEd
                         }
 
                         string xml;
-                        StringBuilder stringBuilder = new StringBuilder();
+                        stringBuilder = new StringBuilder();
                         if (SAGE.Compiler.AssetCompiler.Decompile(out xml, Globals.Game, streamFiles[0], asset, assetReferences, binData, impData, reloData))
                         {
                             // stringBuilder.Append("\n");
                             stringBuilder.Append(xml);
                         }
-                        StringBuilder stringBuilderData = new StringBuilder();
+                        stringBuilderData = new StringBuilder();
                         if (showOutput)
                         {
                             stringBuilderData.Append(string.Format("Asset Dump:\nAssetName: {0}\nSourceFile: {1}\nTypeID:InstanceID:TypeHash:InstanceHash\n{2:X08}:{3:X08}:{4:X08}:{5:X08}\n\nAssetReferences: {6}\n",
@@ -942,12 +931,6 @@ namespace WrathEd
                                 stringBuilderData.Append(string.Format("{0:X02}", reloData[idx]));
                             }
                             int assetDumpSize = binData.Length;
-                            //                        if (binData.Length > MaxAssetDumpSize)
-                            //                        {
-                            //                            stringBuilder.Append(string.Format("\n\nBinary (up to {0}): {1} Offset: {2}\n", MaxAssetDumpSize, asset.BinaryDataSize, binOffset));
-                            //                            assetDumpSize = Math.Min(binData.Length, MaxAssetDumpSize);
-                            //                        }
-                            //                        else
                             {
                                 stringBuilderData.Append(string.Format("\n\nBinary: {0} Offset: {1}\n", asset.BinaryDataSize, binOffset));
                             }
@@ -972,58 +955,16 @@ namespace WrathEd
                                 stringBuilderData.Append(string.Format("{0:X02}", binData[idx]));
                             }
                         }
-                        stopwatch.Stop();
-                        if (showOutput)
-                        {
-                            stringBuilderData.Insert(0, string.Format("Generated in: {0}\n\n", stopwatch.Elapsed));
-                        }
-                        SetContent(stringBuilder.ToString());
-                        SetOutput(stringBuilderData.ToString());
-                        SetBarToValue(0.0);
-                    });
-            }
-        }
-
-        private void Search_Click(object sender, RoutedEventArgs args)
-        {
-            string filter = SearchAssetNameBox.Text.ToLowerInvariant();
-            if (filter.Length > 0)
-            {
-                if (AssetTypeFilter.SelectedIndex > 0)
-                {
-                    Stream.Items.Filter = (obj) =>
+                    }
+                    stopwatch.Stop();
+                    if (showOutput)
                     {
-                        return (obj as string).ToLowerInvariant().Contains(filter) &&
-                            (obj as string).StartsWith(AssetTypeFilter.SelectedItem as string);
-                    };
-                }
-                else
-                {
-                    Stream.Items.Filter = (obj) =>
-                    {
-                        return (obj as string).ToLowerInvariant().Contains(filter);
-                    };
-                }
-            }
-            else
-            {
-                AssetTypeFilter_SelectionChanged(null, null);
-            }
-        }
-
-        private void AssetTypeFilter_SelectionChanged(object sender, SelectionChangedEventArgs args)
-        {
-            if (AssetTypeFilter.SelectedIndex > 0)
-            {
-                Stream.Items.Filter = (obj) =>
-                {
-                    return (obj as string).StartsWith((AssetTypeFilter.SelectedItem as string) + ':');
-                };
-            }
-            else
-            {
-                Stream.Items.Filter = null;
-            }
+                        stringBuilderData.Insert(0, string.Format("Generated in: {0}\n\n", stopwatch.Elapsed));
+                    }
+                    SetContent(stringBuilder.ToString());
+                    SetOutput(stringBuilderData.ToString());
+                    SetBarToValue(0.0);
+                });
         }
 
         public void SetWindowTitle()
@@ -1050,6 +991,10 @@ namespace WrathEd
                 Big.SelectionChanged -= Big_SelectionChanged;
                 Big.SelectionChanged -= StreamBig_SelectionChanged;
                 Big.Items.Clear();
+                AssetIsSelected = false;
+
+                SetContent("");
+                SetOutput("");
             }));
         }
 
@@ -1058,9 +1003,12 @@ namespace WrathEd
             Dispatcher.Invoke((Action)(() =>
             {
                 Stream.SelectionChanged -= Stream_SelectionChanged;
-                Stream.SelectionChanged -= StreamStream_SelectionChanged;
                 Stream.ItemsSource = null;
                 AssetTypeFilter.ItemsSource = null;
+                AssetIsSelected = false;
+
+                SetContent("");
+                SetOutput("");
             }));
         }
 
@@ -1160,9 +1108,11 @@ namespace WrathEd
                                     select c;
             Dispatcher.Invoke((Action)(() =>
             {
+                LoadedGame = true;
+                LoadedStream = false;
                 Stream.ItemsSource = null;
                 Stream.ItemsSource = assets;
-                Stream.SelectionChanged += StreamStream_SelectionChanged;
+                Stream.SelectionChanged += Stream_SelectionChanged;
                 AssetTypeFilter.ItemsSource = null;
                 List<string> assetTypes = new List<string>();
                 assetTypes.Add(string.Empty);
@@ -1187,6 +1137,8 @@ namespace WrathEd
                                     select c;
             Dispatcher.Invoke((Action)(() =>
             {
+                LoadedGame = false;
+                LoadedStream = true;
                 Stream.ItemsSource = null;
                 Stream.ItemsSource = assets;
                 Stream.SelectionChanged += Stream_SelectionChanged;
