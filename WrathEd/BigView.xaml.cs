@@ -33,7 +33,6 @@ namespace WrathEd
         public bool showOutput;
         public bool LoadedGame = false;
         public bool LoadedStream = false;
-        public bool AssetIsSelected = false;
 
         public BigView()
         {
@@ -201,6 +200,30 @@ namespace WrathEd
             LoadGameDefinition();
             Globals.Settings.GameDefinition = Globals.Game.id;
             Globals.Settings.SaveSettings();
+        }
+
+        private void View_Set_Show_Output(bool viewChecked)
+        {
+            showOutput = viewChecked;
+            if (viewChecked)
+            {
+                Output.Visibility = Visibility.Visible;
+                Split_Content_Output.Visibility = Visibility.Visible;
+                XML_Row.Height = new GridLength(0.8, GridUnitType.Star);
+                Output_Row.Height = new GridLength(0.2, GridUnitType.Star);
+                if (Stream.SelectedIndex != -1)
+                {
+                    DecompiletoXML();
+                }
+            }
+            else
+            {
+                SetOutput("");
+                Output.Visibility = Visibility.Hidden;
+                Split_Content_Output.Visibility = Visibility.Hidden;
+                XML_Row.Height = new GridLength(1.0, GridUnitType.Star);
+                Output_Row.Height = new GridLength(0.0, GridUnitType.Star);
+            }
         }
 
         private void File_OpenManifest_Click(object sender, RoutedEventArgs args)
@@ -403,31 +426,14 @@ namespace WrathEd
 
         private void View_Show_Output(object sender, RoutedEventArgs args)
         {
-            showOutput = Show_Output.IsChecked;
-            if (showOutput)
-            {
-                Output.Visibility = Visibility.Visible;
-                XML_Row.Height = new GridLength(0.8, GridUnitType.Star);
-                Output_Row.Height = new GridLength(0.2, GridUnitType.Star);
-                if (AssetIsSelected)
-                {
-                    DecompiletoXML();
-                }
-            }
-            else
-            {
-                SetOutput("");
-                Output.Visibility = Visibility.Hidden;
-                XML_Row.Height = new GridLength(1.0, GridUnitType.Star);
-                Output_Row.Height = new GridLength(0.0, GridUnitType.Star);
-            }
+            View_Set_Show_Output(Show_Output.IsChecked);
         }
 
-        private void View_Show_ShowHiddenDefaults(object sender, RoutedEventArgs args)
+        private void View_Show_HiddenDefaults(object sender, RoutedEventArgs args)
         {
-            ShowDefault.IsChecked = Show_ShowHiddenDefaults.IsChecked;
+            ShowDefault.IsChecked = Show_HiddenDefaults.IsChecked;
 
-            if (AssetIsSelected)
+            if (Stream.SelectedIndex != -1)
             {
                 DecompiletoXML();
             }
@@ -604,7 +610,6 @@ namespace WrathEd
             if (args.AddedItems.Count != 0)
             {
                 DecompiletoXML();
-                AssetIsSelected = true;
             }
         }
 
@@ -649,6 +654,7 @@ namespace WrathEd
                 Stream.Items.Filter = null;
             }
         }
+
         public void DecompiletoXML()
         {
             ThreadPool.QueueUserWorkItem(
@@ -991,7 +997,6 @@ namespace WrathEd
                 Big.SelectionChanged -= Big_SelectionChanged;
                 Big.SelectionChanged -= StreamBig_SelectionChanged;
                 Big.Items.Clear();
-                AssetIsSelected = false;
 
                 SetContent("");
                 SetOutput("");
@@ -1005,7 +1010,6 @@ namespace WrathEd
                 Stream.SelectionChanged -= Stream_SelectionChanged;
                 Stream.ItemsSource = null;
                 AssetTypeFilter.ItemsSource = null;
-                AssetIsSelected = false;
 
                 SetContent("");
                 SetOutput("");
