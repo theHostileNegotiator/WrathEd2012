@@ -18,6 +18,18 @@ namespace WrathEd.WrathEdXML.Settings
 		public string Path { get; set; }
 	}
 
+	public class ViewSettings
+	{
+		[XmlAttribute()]
+		public string DarkMode { get; set; }
+
+		[XmlAttribute()]
+		public string ViewOutput { get; set; }
+
+		[XmlAttribute()]
+		public string ShowHiddenDefaults { get; set; }
+	}
+
 	[Serializable()]
 	[XmlType(AnonymousType = false, Namespace = "uri:thundermods.net:WrathEd:BinaryAssetBuilder")]
 	[XmlRoot(Namespace = "uri:thundermods.net:WrathEd:BinaryAssetBuilder", IsNullable = false)]
@@ -25,6 +37,9 @@ namespace WrathEd.WrathEdXML.Settings
 	{
 		[XmlElement()]
 		public string GameDefinition { get; set; }
+
+		[XmlElement()]
+		public List<ViewSettings> ViewSettings { get; set; }
 
 		[XmlElement()]
 		public List<LastProjectType> LastProject { get; set; }
@@ -44,6 +59,12 @@ namespace WrathEd.WrathEdXML.Settings
 			Settings settings = new Settings();
 			settings.GameDefinition = defaultGame;
 			settings.LastProject = new List<LastProjectType>();
+			settings.ViewSettings = new List<ViewSettings>();
+			ViewSettings viewsettings = new ViewSettings();
+			viewsettings.DarkMode = "false";
+			viewsettings.ViewOutput = "false";
+			viewsettings.ShowHiddenDefaults = "false";
+			settings.ViewSettings.Add(viewsettings);
 			XmlWriterSettings writerSettings = new XmlWriterSettings();
 			writerSettings.Encoding = Encoding.UTF8;
 			writerSettings.Indent = true;

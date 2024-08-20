@@ -252,6 +252,15 @@ namespace WrathEd
 				{
 					Globals.Settings.GameDefinition = gameDefinition;
 				}
+
+				if (Globals.Settings.ViewSettings.Count == 0)
+				{
+					WrathEdXML.Settings.ViewSettings ViewSettings = new WrathEdXML.Settings.ViewSettings();
+					ViewSettings.DarkMode = "false";
+					ViewSettings.ViewOutput = "false";
+					ViewSettings.ShowHiddenDefaults = "false";
+					Globals.Settings.ViewSettings.Add(ViewSettings);
+				}
 			}
 			else
 			{

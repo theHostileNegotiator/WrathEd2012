@@ -54,6 +54,28 @@ namespace WrathEd
             LoadGameDefinition(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location)
                 + Path.DirectorySeparatorChar
                 + Globals.Settings.GameDefinitionPath);
+
+            Dispatcher.BeginInvoke(new ThreadStart(() =>
+            {
+                // DarkMode.IsChecked = xmlstrtobool(Globals.Settings.ViewSettings[0].DarkMode);
+                Show_Output.IsChecked = xmlstrtobool(Globals.Settings.ViewSettings[0].ViewOutput);
+                Show_HiddenDefaults.IsChecked = xmlstrtobool(Globals.Settings.ViewSettings[0].ShowHiddenDefaults);
+                // View_Set_DarkMode(DarkMode.IsChecked);
+                View_Set_Show_Output(Show_Output.IsChecked);
+                ShowDefault.IsChecked = Show_HiddenDefaults.IsChecked;
+            }
+            ));
+        }
+
+        // XML String to Bool Converter
+        private bool xmlstrtobool(string xmlbool)
+        {
+            bool result;
+            if (xmlbool.ToLowerInvariant() == "true") { result = true; }
+            else if (xmlbool.ToLowerInvariant() == "false") { result = false; }
+            // Error
+            else { result = false; }
+            return result;
         }
 
         public void LoadGameDefinition(string source)
@@ -427,6 +449,15 @@ namespace WrathEd
         private void View_Show_Output(object sender, RoutedEventArgs args)
         {
             View_Set_Show_Output(Show_Output.IsChecked);
+            if (Show_Output.IsChecked)
+            {
+                Globals.Settings.ViewSettings[0].ViewOutput = "true";
+            }
+            else
+            {
+                Globals.Settings.ViewSettings[0].ViewOutput = "false";
+            }
+            Globals.Settings.SaveSettings();
         }
 
         private void View_Show_HiddenDefaults(object sender, RoutedEventArgs args)
@@ -437,6 +468,16 @@ namespace WrathEd
             {
                 DecompiletoXML();
             }
+
+            if (ShowDefault.IsChecked)
+            {
+                Globals.Settings.ViewSettings[0].ShowHiddenDefaults = "true";
+            }
+            else
+            {
+                Globals.Settings.ViewSettings[0].ShowHiddenDefaults = "false";
+            }
+            Globals.Settings.SaveSettings();
         }
 
         private void Help_About_Click(object sender, RoutedEventArgs args)
