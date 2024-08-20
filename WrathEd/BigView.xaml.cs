@@ -283,6 +283,7 @@ namespace WrathEd
                         AddItemsToStream(assets);
                         SetContentToStreamInfo();
                         SetBarToValue(0.0);
+                        SetOutput("");
                     });
             }
         }
@@ -522,7 +523,6 @@ namespace WrathEd
                         SetContentToStreamManifestInfo();
                         SetBarToValue(0.0);
 
-                        SetContent("");
                         SetOutput("");
                     });
             }
@@ -640,7 +640,6 @@ namespace WrathEd
                                 break;
                         }
                         SetBarToValue(0.0);
-                        SetContent("");
                         SetOutput("");
                     });
             }

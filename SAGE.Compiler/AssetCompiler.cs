@@ -1407,8 +1407,10 @@ namespace SAGE.Compiler
                     return true;
                 }
             }
-            output = "Assets of this type are not defined. Maybe you tried to load an outdated version.";
-            return false;
+            output = string.Format("This GameAsset Type '{0}' with TypeHash '{1}' is not defined for your current Game Definition",
+                stream.AssetNames[asset.NameOffset].Split(':')[0],
+                asset.TypeHash);
+            return true;
         }
 
         public static bool Compile(Uri baseUri, AssetDeclaration file, GameDefinition game, out string ErrorDescription, Func<string, bool> setAsset, bool isTempAsset = false)
