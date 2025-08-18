@@ -10,25 +10,30 @@
 			id="UpdateDelay"
 			AssetType="Time"
 			IsAttribute="true"
-			Default="1s" />
+			Default="1s"
+			HideIfDefault="false" />
 		<Entry
 			id="Suppressability"
 			AssetType="SageReal"
 			IsAttribute="true"
-			Default="0" />
+			Default="0"
+			HideIfDefault="false" />
 		<Entry
 			id="SuppressionDuration"
 			AssetType="Time"
 			IsAttribute="true"
-			Default="3s" />
+			Default="3s"
+			HideIfDefault="false" />
 		<EntryReference
 			id="AttributeModifierSuppressed"
 			AssetType="AttributeModifier"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 		<EntryReference
 			id="AttributeModifierForceMove"
 			AssetType="AttributeModifier"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 		<Entry
 			id="IgnoreSuppressionObjectStatus"
 			AssetType="ObjectStatusBitFlags"

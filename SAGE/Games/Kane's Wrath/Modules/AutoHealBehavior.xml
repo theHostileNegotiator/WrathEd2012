@@ -47,7 +47,8 @@
 			id="InitiallyActive"
 			AssetType="SageBool"
 			IsAttribute="true"
-			Default="false" />
+			Default="false"
+			HideIfDefault="false" />
 		<Entry
 			id="AffectsWholePlayer"
 			AssetType="SageBool"
@@ -62,12 +63,14 @@
 			id="HealOnlyIfNotUnderAttack"
 			AssetType="SageBool"
 			IsAttribute="true"
-			Default="false" />
+			Default="false"
+			HideIfDefault="false" />
 		<Entry
 			id="HealOnlyIfNotInCombat"
 			AssetType="SageBool"
 			IsAttribute="true"
-			Default="false" />
+			Default="false"
+			HideIfDefault="false" />
 		<Entry
 			id="HealOnlyOthers"
 			AssetType="SageBool"

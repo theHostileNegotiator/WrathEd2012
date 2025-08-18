@@ -486,15 +486,18 @@
 		<Entry
 			id="X"
 			AssetType="Angle"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 		<Entry
 			id="Y"
 			AssetType="Angle"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 		<Entry
 			id="Z"
 			AssetType="Angle"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 	</Asset>
 
 	<Asset

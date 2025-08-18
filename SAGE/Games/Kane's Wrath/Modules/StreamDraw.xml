@@ -19,27 +19,32 @@
 			id="Velocity"
 			AssetType="SageReal"
 			IsAttribute="true"
-			Default="200.0" />
+			Default="200.0"
+			HideIfDefault="false" />
 		<Entry
 			id="ArcHeightFactor"
 			AssetType="SageReal"
 			IsAttribute="true"
-			Default="0.0" />
+			Default="0.0"
+			HideIfDefault="false" />
 		<Entry
 			id="UVWorldSize"
 			AssetType="SageReal"
 			IsAttribute="true"
-			Default="10.0" />
+			Default="10.0"
+			HideIfDefault="false" />
 		<Entry
 			id="NumTubeSides"
 			AssetType="SageInt"
 			IsAttribute="true"
-			Default="8" />
+			Default="8"
+			HideIfDefault="false" />
 		<Entry
 			id="TubeRadius"
 			AssetType="SageReal"
 			IsAttribute="true"
-			Default="1.0" />
+			Default="1.0"
+			HideIfDefault="false" />
 		<EntryReference
 			id="HitFx"
 			AssetType="FXList"
@@ -67,7 +72,8 @@
 			id="UseDistortionShader"
 			AssetType="SageBool"
 			IsAttribute="true"
-			Default="false" />
+			Default="false"
+			HideIfDefault="false" />
 		<Entry
 			id="fill"
 			AssetType="Byte"

@@ -10,7 +10,8 @@
 			id="StreamId"
 			AssetType="SageInt"
 			IsAttribute="true"
-			Default="0" />
+			Default="0"
+			HideIfDefault="false" />
 	</Asset>
 
 </AssetDefinition>

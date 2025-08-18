@@ -10,11 +10,13 @@
 			id="Radius"
 			AssetType="SageReal"
 			IsAttribute="true"
-			Default="10.0" />
+			Default="10.0"
+			HideIfDefault="false" />
 		<EntryReference
 			id="SweepFXList"
 			AssetType="FXList"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 		<EntryReference
 			id="VeteranSweepFXList"
 			AssetType="FXList"
@@ -23,7 +25,8 @@
 			id="SweepFXTimeout"
 			AssetType="Time"
 			IsAttribute="true"
-			Default="0s" />
+			Default="0s"
+			HideIfDefault="false" />
 		<EntryReference
 			id="SweepWeapon"
 			AssetType="WeaponTemplate"

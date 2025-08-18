@@ -858,10 +858,9 @@ namespace WrathEd
                         stringBuilderData = new StringBuilder();
                         if (showOutput)
                         {
-                            stringBuilderData.Append(string.Format("Asset Dump:\nAssetName: {0}\nSourceFile: {1}\nTypeID:InstanceID:TypeHash:InstanceHash\n{2:X08}:{3:X08}:{4:X08}:{5:X08}\n\nAssetReferences: {6}\n",
+                            stringBuilderData.Append(string.Format("Asset Dump:\nAssetName: {0}\nSourceFile: {1}\nTypeID: {2:X08}\nInstanceID: {3:X08}\nTypeHash: {4:X08}\nInstanceHash: {5:X08}\n",
                             assetName, sourceName,
-                            asset.TypeId, asset.InstanceId, asset.TypeHash, asset.InstanceHash,
-                            asset.AssetReferenceCount));
+                            asset.TypeId, asset.InstanceId, asset.TypeHash, asset.InstanceHash));
                             int assetDumpSize = binData.Length;
                             {
                                 stringBuilderData.Append(string.Format("\n\nBinary: {0} Offset: {1}\n", asset.BinaryDataSize, binOffset));
@@ -928,10 +927,15 @@ namespace WrathEd
                         stringBuilderData = new StringBuilder();
                         if (showOutput)
                         {
-                            stringBuilderData.Append(string.Format("Asset Dump:\nAssetName: {0}\nSourceFile: {1}\nTypeID:InstanceID:TypeHash:InstanceHash\n{2:X08}:{3:X08}:{4:X08}:{5:X08}\n\nAssetReferences: {6}\n",
+                            stringBuilderData.Append(string.Format("Asset Dump:\nAssetName: {0}\nSourceFile: {1}\nTypeID: {2:X08}\nInstanceID: {3:X08}\nTypeHash: {4:X08}\nInstanceHash: {5:X08}\n",
                             assetName, sourceName,
-                            asset.TypeId, asset.InstanceId, asset.TypeHash, asset.InstanceHash,
-                            asset.AssetReferenceCount));
+                            asset.TypeId, asset.InstanceId, asset.TypeHash, asset.InstanceHash));
+                            stringBuilderData.Append(string.Format("NameOffset: {0}\nSourceFileNameOffset: {1}\n", asset.NameOffset, asset.SourceFileNameOffset));
+                            if (streamFiles[0].Header.Version >= 6)
+                            {
+                                stringBuilderData.Append(string.Format("IsTokenized: {0}\n", asset.IsTokenized));
+                            }
+                            stringBuilderData.Append(string.Format("\nAssetReferences: {0}\n", asset.AssetReferenceCount));
                             for (int idx = 0; idx < asset.AssetReferenceCount; ++idx)
                             {
                                 stringBuilderData.Append(string.Format("{0:X08}:{1:X08}\n", assetReferences[idx].TypeId, assetReferences[idx].InstanceId));

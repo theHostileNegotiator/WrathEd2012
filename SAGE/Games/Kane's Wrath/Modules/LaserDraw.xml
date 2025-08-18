@@ -10,67 +10,80 @@
 			id="Texture1_UTile"
 			AssetType="SageReal"
 			IsAttribute="true"
-			Default="1.0" />
+			Default="1.0"
+			HideIfDefault="false" />
 		<Entry
 			id="Texture1_VTile"
 			AssetType="SageReal"
 			IsAttribute="true"
-			Default="1.0" />
+			Default="1.0"
+			HideIfDefault="false" />
 		<Entry
 			id="Texture2_UTile"
 			AssetType="SageReal"
 			IsAttribute="true"
-			Default="1.0" />
+			Default="1.0"
+			HideIfDefault="false" />
 		<Entry
 			id="Texture2_VTile"
 			AssetType="SageReal"
 			IsAttribute="true"
-			Default="1.0" />
+			Default="1.0"
+			HideIfDefault="false" />
 		<Entry
 			id="Texture1_UScrollRate"
 			AssetType="SageReal"
 			IsAttribute="true"
-			Default="0.0" />
+			Default="0.0"
+			HideIfDefault="false" />
 		<Entry
 			id="Texture1_VScrollRate"
 			AssetType="SageReal"
 			IsAttribute="true"
-			Default="0.0" />
+			Default="0.0"
+			HideIfDefault="false" />
 		<Entry
 			id="Texture2_UScrollRate"
 			AssetType="SageReal"
 			IsAttribute="true"
-			Default="0.0" />
+			Default="0.0"
+			HideIfDefault="false" />
 		<Entry
 			id="Texture2_VScrollRate"
 			AssetType="SageReal"
 			IsAttribute="true"
-			Default="0.0" />
+			Default="0.0"
+			HideIfDefault="false" />
 		<Entry
 			id="Texture1_NumFrames"
 			AssetType="SageInt"
 			IsAttribute="true"
-			Default="1" />
+			Default="1"
+			HideIfDefault="false" />
 		<Entry
 			id="Texture1_FrameRate"
 			AssetType="SageReal"
 			IsAttribute="true"
-			Default="30.0" />
+			Default="30.0"
+			HideIfDefault="false" />
 		<Entry
 			id="Texture2_NumFrames"
 			AssetType="SageInt"
 			IsAttribute="true"
-			Default="1" />
+			Default="1"
+			HideIfDefault="false" />
 		<Entry
 			id="Texture2_FrameRate"
 			AssetType="SageReal"
 			IsAttribute="true"
-			Default="30.0" />
+			Default="30.0"
+			HideIfDefault="false" />
 		<Entry
 			id="LaserWidth"
 			AssetType="SageReal"
 			IsAttribute="true"
-			Default="5.0" />
+			Default="5.0"
+			HideIfDefault="false" />
 		<Entry
 			id="WeaponSlotID"
 			AssetType="SageInt"

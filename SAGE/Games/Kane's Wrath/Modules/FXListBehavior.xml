@@ -29,7 +29,8 @@
 		<Entry
 			id="Index"
 			AssetType="FXListBehaviorType"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 		<EntryReference
 			id="FX"
 			AssetType="FXList"

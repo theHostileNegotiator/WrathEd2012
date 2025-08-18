@@ -234,16 +234,19 @@
 			id="WeaponSlotID"
 			AssetType="SageInt"
 			IsAttribute="true"
-			Default="1" />
+			Default="1"
+			HideIfDefault="false" />
 		<Entry
 			id="WeaponSlotType"
 			AssetType="WeaponSlotType"
 			IsAttribute="true"
-			Default="PRIMARY_WEAPON" />
+			Default="PRIMARY_WEAPON"
+			HideIfDefault="false" />
 		<Entry
 			id="BoneName"
 			AssetType="String"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 	</Asset>
 
 	<Asset

@@ -31,22 +31,26 @@
 			id="MinIdleScanTime"
 			AssetType="Time"
 			IsAttribute="true"
-			Default="0.0s" />
+			Default="0.0s"
+			HideIfDefault="false" />
 		<Entry
 			id="MaxIdleScanTime"
 			AssetType="Time"
 			IsAttribute="true"
-			Default="0.0s" />
+			Default="0.0s"
+			HideIfDefault="false" />
 		<Entry
 			id="MinIdleScanAngle"
 			AssetType="SageReal"
 			IsAttribute="true"
-			Default="0.0" />
+			Default="0.0"
+			HideIfDefault="false" />
 		<Entry
 			id="MaxIdleScanAngle"
 			AssetType="SageReal"
 			IsAttribute="true"
-			Default="0.0" />
+			Default="0.0"
+			HideIfDefault="false" />
 		<Entry
 			id="MaxDeflectionClockwise"
 			AssetType="Angle"

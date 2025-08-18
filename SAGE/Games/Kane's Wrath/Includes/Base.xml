@@ -37,15 +37,18 @@
 		<Entry
 			id="r"
 			AssetType="SageReal"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 		<Entry
 			id="g"
 			AssetType="SageReal"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 		<Entry
 			id="b"
 			AssetType="SageReal"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 	</Asset>
 
 	<Asset
@@ -53,19 +56,23 @@
 		<Entry
 			id="r"
 			AssetType="SageReal"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 		<Entry
 			id="g"
 			AssetType="SageReal"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 		<Entry
 			id="b"
 			AssetType="SageReal"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 		<Entry
 			id="a"
 			AssetType="SageReal"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 	</Asset>
 
 	<Asset
@@ -101,11 +108,13 @@
 		<Entry
 			id="x"
 			AssetType="SageReal"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 		<Entry
 			id="y"
 			AssetType="SageReal"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 	</Asset>
 
 	<Asset
@@ -113,11 +122,13 @@
 		<Entry
 			id="x"
 			AssetType="SageInt"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 		<Entry
 			id="y"
 			AssetType="SageInt"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 	</Asset>
 
 	<Asset
@@ -125,15 +136,18 @@
 		<Entry
 			id="x"
 			AssetType="SageReal"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 		<Entry
 			id="y"
 			AssetType="SageReal"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 		<Entry
 			id="z"
 			AssetType="SageReal"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 	</Asset>
 
 	<Asset
@@ -141,15 +155,18 @@
 		<Entry
 			id="B"
 			AssetType="Byte"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 		<Entry
 			id="G"
 			AssetType="Byte"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 		<Entry
 			id="R"
 			AssetType="Byte"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 		<Entry
 			id="fill"
 			AssetType="Byte"
@@ -162,19 +179,23 @@
 		<Entry
 			id="B"
 			AssetType="Byte"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 		<Entry
 			id="G"
 			AssetType="Byte"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 		<Entry
 			id="R"
 			AssetType="Byte"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 		<Entry
 			id="A"
 			AssetType="Byte"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 	</Asset>
 
 	<EnumAsset
@@ -223,11 +244,11 @@
 		<EntryReference
 			id="Original"
 			AssetType="Texture"
-			IsAttribute="true"/>
+			IsAttribute="true" />
 		<EntryReference
 			id="New"
 			AssetType="Texture"
-			IsAttribute="true"/>
+			IsAttribute="true" />
 	</Asset>
 
 	<Asset

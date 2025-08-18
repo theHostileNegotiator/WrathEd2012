@@ -14,7 +14,8 @@
 		<Entry
 			id="Type"
 			AssetType="SlowDeathPhaseType"
-			IsAttribute="true" />
+			IsAttribute="true"
+			HideIfDefault="false" />
 	</Asset>
 
 	<Asset
